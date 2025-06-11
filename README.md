@@ -1,5 +1,9 @@
 # BeeRduino
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/f67fd0d1-dd92-4d45-b6be-9ea535b3ac1a" alt="BeeRduino" width="300"/>
+</div>
+
 This repository contains the full implementation and documentation for the BeeRduino project — a smart beehive monitoring system focused on sustainability and Smart Village applications.
 
 ## Folder Structure
