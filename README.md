@@ -25,7 +25,7 @@ The web interface for visualizing sensor data from the beehive, including time-s
 Contains documentation for the entire project, including system architecture, data flow, written reports, and diagrams. The main written report is in `Dokumentation.md`.
 
 ### `presentation/`
-Contains the final project presentation (PDF and/or PowerPoint).
+Contains the final project presentation (PDF and PowerPoint).
 
 ## Notes
 - The system is designed for low-cost, outdoor deployment.
