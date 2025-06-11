@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package com.daham.grpc;
+
+option java_package = "com.daham.grpc";
+option java_outer_classname = "MeasurementProto";
+
+import "google/protobuf/timestamp.proto";
+
+message Measurement {
+  google.protobuf.Timestamp timestamp = 1;
+  string owner_id                     = 2;
+  string beehive_id                   = 3;
+  double value                        = 4;
+  SensorType type                     = 5;
+  UnitType unit                       = 6;
+}
+
+enum SensorType {
+  SENSOR_DEFAULT             = 0;
+  SENSOR_TEMPERATURE_INSIDE  = 1;
+  SENSOR_TEMPERATURE_OUTSIDE = 2;
+  SENSOR_HUMIDITY_INSIDE     = 3;
+  SENSOR_HUMIDITY_OUTSIDE    = 4;
+  SENSOR_WEIGHT              = 5;
+}
+
+enum UnitType {
+  UNIT_DEFAULT    = 0;
+  UNIT_CELSIUS    = 1;
+  UNIT_PERCENTAGE = 2;
+  UNIT_GRAM       = 3;
+}
+
+message Reply {
+  bool success   = 1;
+  string message = 2;
+}
+
+service MeasurementService {
+  rpc StreamMeasurements(stream Measurement) returns (Reply);
+}
