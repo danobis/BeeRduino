@@ -12,23 +12,23 @@ This repository contains the full implementation and documentation for the BeeRd
 
 ## Folder Structure
 
-### 
-Contains the firmware for the ESP32-based sensor node. This code is responsible for collecting data from the sensors and publishing it via MQTT.
+### `arduino/`
+Contains the firmware for the Arduino-based sensor node. This code is responsible for collecting environmental data (e.g. temperature, humidity, weight) and transmitting it via MQTT.
 
-### 
-Java application built with Quarkus. It receives MQTT messages, processes and stores sensor data, and provides a REST API.
+### `backend/`
+Java application built with Quarkus. It receives MQTT messages, processes and stores sensor data, and provides a REST API for accessing the data.
 
-### 
-The web interface for visualizing environmental data from the beehive, such as temperature, humidity, and weight over time.
+### `frontend/`
+The web interface for visualizing sensor data from the beehive, including time-series graphs and current measurements.
 
-### 
-Documentation related to the project, including system diagrams, architecture, written reports, and images. Contains , the main written report.
+### `docs/`
+Contains documentation for the entire project, including system architecture, data flow, written reports, and diagrams. The main written report is in `Dokumentation.md`.
 
-### 
-Contains the final presentation slides in PDF and/or PowerPoint format.
+### `presentation/`
+Contains the final project presentation (PDF and/or PowerPoint).
 
 ## Notes
-- All components are designed with a focus on low-power operation and remote deployment.
-- The project is aligned with Smart Village and sustainability goals.
+- The system is designed for low-cost, outdoor deployment.
+- It contributes to sustainable agriculture and biodiversity monitoring in rural areas.
 
 
