@@ -6,6 +6,10 @@
 
 This repository contains the full implementation and documentation for the BeeRduino project — a smart beehive monitoring system focused on sustainability and Smart Village applications.
 
+## Authors
+- Daniel Hametner
+- Christopher Nobis
+
 ## Folder Structure
 
 ### 
