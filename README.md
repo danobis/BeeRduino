@@ -28,8 +28,6 @@ Contains documentation for the entire project, including system architecture, da
 Contains the final project presentation (PDF and PowerPoint).
 
 ## Notes
-- The system is designed for low-cost, outdoor deployment.
-- It contributes to sustainable agriculture and biodiversity monitoring in rural areas.
 - This project was developed as part of the course **MUS2UE: Mobile und ubiquitäre Systeme (SE.ma VZ SS25)** at **FH OÖ Campus Hagenberg**.
 
 
