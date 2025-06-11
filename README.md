@@ -16,7 +16,7 @@ This repository contains the full implementation and documentation for the BeeRd
 Contains the firmware for the Arduino-based sensor node. This code is responsible for collecting environmental data (e.g. temperature, humidity, weight) and transmitting it via MQTT.
 
 ### `backend/`
-Java application built with Quarkus. It receives MQTT messages, processes and stores sensor data, and provides a REST API for accessing the data.
+Java application built with Quarkus. It receives MQTT messages, processes and stores sensor data, and provides an API for accessing the data.
 
 ### `frontend/`
 The web interface for visualizing sensor data from the beehive, including time-series graphs and current measurements.
