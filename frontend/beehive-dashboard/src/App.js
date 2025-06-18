@@ -11,6 +11,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { useQuery, gql } from '@apollo/client';
 
 ChartJS.register(
   CategoryScale,
@@ -116,6 +117,57 @@ function App() {
       y: { ticks: { color: colors.darkGreen }, beginAtZero: true },
     },
   });
+
+  const GET_MEASUREMENTS = gql`
+  query GetMeasurements($owner_uuid: String!, $beehive_uuid: String!, $sensor_type: SensorType!, $history_span: HistorySpan!) {
+    get_measurements(
+      owner_uuid: $owner_uuid,
+      beehive_uuid: $beehive_uuid,
+      sensor_type: $sensor_type,
+      history_span: $history_span
+    ) {
+      uuid
+      value
+      type
+      unit
+      timestamp
+    }
+  }`;
+
+  const { data, loading, error } = useQuery(GET_MEASUREMENTS, {
+    variables: {
+      owner_uuid: "F67EC886-0051-487E-81D4-932E298496AE",
+      beehive_uuid: "D1280171-E8BC-4E8F-8001-0B6F74A09847",
+      sensor_type: "SENSOR_TEMPERATURE_INSIDE",
+      history_span: "HISTORY_LAST_5DAYS",
+    },
+  });
+
+  useEffect(() => {
+  if (data && data.get_measurements && data.get_measurements.length > 0) {
+    const historicalTemperatureData = data.get_measurements.map(m => ({
+      time: new Date(m.timestamp),
+      value: m.value,
+      type: m.type,
+      unit: m.unit,
+    }));
+
+    setDataPoints((prev) => ({
+      ...prev,
+      temperature: historicalTemperatureData,
+    }));
+
+    const lastMeasurement = historicalTemperatureData[historicalTemperatureData.length - 1];
+    setLatestData((prev) => ({
+      ...prev,
+      temperature: lastMeasurement ? lastMeasurement.value : prev.temperature,
+      lastUpdate: lastMeasurement ? lastMeasurement.time : prev.lastUpdate,
+    }));
+  }}, [data]);
+
+
+  if (loading) return <p>Loading historical data...</p>;
+  if (error) return <p>Error loading data: {error.message}</p>;
 
   return (
     <div style={{ maxWidth: 900, margin: '2rem auto', fontFamily: 'Arial, sans-serif', padding: '0 1rem' }}>
