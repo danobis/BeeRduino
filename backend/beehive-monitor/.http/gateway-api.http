@@ -278,7 +278,7 @@ POST http://localhost:8080/gateway/graphql/analysis
 Content-Type: application/json
 
 {
-  "query": "query GetMeasurements($beehive_uuid: String, $history_span: HistorySpan, $sensor_type: SensorType) { get_measurements(beehive_uuid: $beehive_uuid, history_span: $history_span, sensor_type: $sensor_type) { uuid beehive_uuid owner_uuid type unit value timestamp } }",
+  "query": "query GetMeasurements($beehive_uuid: String, $history_span: HistorySpan, $sensor_type: SensorType) { get_measurements(beehive_uuid: $beehive_uuid, history_span: $history_span, sensor_type: $sensor_type) { uuid beehive_uuid type unit value timestamp } }",
   "variables": {
     "beehive_uuid": "{{beehive_uuid}}",
     "history_span": "LAST_5DAYS",

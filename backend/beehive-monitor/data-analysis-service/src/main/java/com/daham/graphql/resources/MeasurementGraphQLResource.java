@@ -20,6 +20,7 @@ import java.util.UUID;
 
 @Slf4j
 @GraphQLApi
+@SuppressWarnings("all")
 public class MeasurementGraphQLResource {
   @Inject
   MeasurementService measurementService;

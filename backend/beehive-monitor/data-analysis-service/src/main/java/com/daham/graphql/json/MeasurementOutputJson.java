@@ -30,9 +30,6 @@ public class MeasurementOutputJson {
     this.timestamp = TimestampUtils.toString(timestamp);
   }
 
-  @JsonbProperty("owner_uuid")
-  private UUID ownerId;
-
   @JsonbProperty("beehive_uuid")
   private UUID beehiveId;
   private double value;
