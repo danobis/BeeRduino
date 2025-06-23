@@ -2,6 +2,13 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gateway-service" />
+      </profile>
       <profile name="Annotation profile for beehive-monitor" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -9,19 +16,27 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.38/lombok-1.18.38.jar" />
         </processorPath>
-        <module name="grpc-client" />
-        <module name="rabbitmq-client" />
-        <module name="graphql-service" />
-        <module name="client-common" />
+        <module name="data-producer" />
+        <module name="rpc-common" />
+        <module name="rabbitmq-common" />
+        <module name="data-analysis-service" />
+        <module name="core-service" />
+        <module name="data-collector-service" />
+        <module name="service-common" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="client-common" options="-parameters" />
-      <module name="graphql-service" options="-parameters" />
-      <module name="grpc-client" options="-parameters" />
-      <module name="rabbitmq-client" options="-parameters" />
+      <module name="beehive-monitor" options="" />
+      <module name="core-service" options="-parameters" />
+      <module name="data-analysis-service" options="-parameters" />
+      <module name="data-collector-service" options="-parameters" />
+      <module name="data-producer" options="-parameters" />
+      <module name="gateway-service" options="-parameters" />
+      <module name="rabbitmq-common" options="-parameters" />
+      <module name="rpc-common" options="-parameters" />
+      <module name="service-common" options="-parameters" />
     </option>
   </component>
 </project>
