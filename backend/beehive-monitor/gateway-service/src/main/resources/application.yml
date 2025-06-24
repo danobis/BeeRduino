@@ -7,14 +7,16 @@ spring:
 
   cloud:
     consul:
-      host: localhost
+      host: ${SPRING_CLOUD_CONSUL_HOST:localhost}
       port: 8500
       discovery:
         enabled: true
         register: true
         service-name: ${spring.application.name}
         instance-id: ${spring.application.name}:${random.int}
+        hostname: ${SPRING_CLOUD_CONSUL_HEALTH_CHECK_HOST:host.docker.internal}
         health-check-interval: 10s
+        health-check-timeout: 5s
         health-check-path: /actuator/health
         tags:
           - gateway

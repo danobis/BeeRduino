@@ -3,7 +3,10 @@ package com.daham.rabbitmq;
 import com.daham.messaging.MessageHandler;
 import com.daham.messaging.MessageSerializer;
 import com.daham.messaging.Subscriber;
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.BuiltinExchangeType;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.DeliverCallback;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;

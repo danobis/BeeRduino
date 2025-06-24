@@ -135,6 +135,7 @@ Content-Type: application/json
 ### Create Beehive (Success - mit vorhandener location_uuid)
 # (Hier wird angenommen, dass location_uuid existiert. Andernfalls vorher Location anlegen.)
 POST http://localhost:8080/gateway/graphql/core
+# POST http://localhost:8081/graphql
 Content-Type: application/json
 
 {

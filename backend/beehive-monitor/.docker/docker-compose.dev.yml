@@ -55,7 +55,7 @@ services:
       - '9090:9090'
     volumes:
       - prometheus-storage:/prometheus
-      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml:ro
+      - ./prometheus/config-dev.yml:/etc/prometheus/prometheus.yml:ro
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
       - '--storage.tsdb.path=/prometheus'
@@ -91,6 +91,8 @@ services:
       - "8500:8500"
       - "8501:8501"
     restart: unless-stopped
+    networks:
+      - shared-network
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8500/v1/status/leader" ]
       interval: 30s
