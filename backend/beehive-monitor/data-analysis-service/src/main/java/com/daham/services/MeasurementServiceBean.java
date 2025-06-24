@@ -33,7 +33,7 @@ public class MeasurementServiceBean implements MeasurementService {
     try {
       return measurementDao.findAllByBeehiveId(beehiveId, type, span);
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 
@@ -55,7 +55,7 @@ public class MeasurementServiceBean implements MeasurementService {
       }
       return measurement;
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 }

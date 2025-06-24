@@ -11,7 +11,7 @@
     <module>core-service</module>
     <module>data-analysis-service</module>
     <module>data-collector-service</module>
-    <module>data-producer</module>
+    <module>data-producer-service</module>
     <module>rabbitmq-common</module>
     <module>rpc-common</module>
     <module>service-common</module>

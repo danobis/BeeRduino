@@ -31,7 +31,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       return Optional.ofNullable(entityManager.find(Beehive.class, id));
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -41,7 +41,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       return entityManager.createQuery("SELECT b FROM Beehive b", Beehive.class).getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -51,7 +51,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       return entityManager.merge(beehive);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -61,7 +61,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       entityManager.persist(beehive);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -71,7 +71,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       entityManager.remove(beehive);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -84,7 +84,7 @@ public class BeehiveDaoBean implements BeehiveDao {
           .getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -106,7 +106,7 @@ public class BeehiveDaoBean implements BeehiveDao {
       return Optional.empty();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 }

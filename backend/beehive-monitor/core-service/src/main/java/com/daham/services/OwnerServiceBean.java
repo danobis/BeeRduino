@@ -25,7 +25,7 @@ public class OwnerServiceBean implements OwnerService {
       }
       return result.get();
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 
@@ -38,7 +38,7 @@ public class OwnerServiceBean implements OwnerService {
       }
       return result.get();
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 
@@ -50,7 +50,7 @@ public class OwnerServiceBean implements OwnerService {
       }
       return ownerDao.merge(owner);
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 }

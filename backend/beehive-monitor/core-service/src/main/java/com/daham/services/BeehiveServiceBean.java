@@ -36,7 +36,7 @@ public class BeehiveServiceBean implements BeehiveService {
       }
       return beehiveDao.findAllByOwnerId(ownerId);
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 
@@ -52,7 +52,7 @@ public class BeehiveServiceBean implements BeehiveService {
       }
       return result.get();
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 
@@ -82,7 +82,7 @@ public class BeehiveServiceBean implements BeehiveService {
       registryClient.registerBeehive(beehive);
       return beehive;
     } catch (DataAccessException e) {
-      throw new InternalServerException(e.toString());
+      throw new InternalServerException(e.getMessage());
     }
   }
 }

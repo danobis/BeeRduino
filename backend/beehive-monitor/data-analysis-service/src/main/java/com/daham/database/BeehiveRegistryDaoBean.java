@@ -30,7 +30,7 @@ public class BeehiveRegistryDaoBean implements BeehiveRegistryDao {
       return Optional.ofNullable(entityManager.find(RegistryEntry.class, id));
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -40,7 +40,7 @@ public class BeehiveRegistryDaoBean implements BeehiveRegistryDao {
       return entityManager.createQuery("SELECT r FROM RegistryEntry r", RegistryEntry.class).getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -50,7 +50,7 @@ public class BeehiveRegistryDaoBean implements BeehiveRegistryDao {
       return entityManager.merge(entry);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -60,7 +60,7 @@ public class BeehiveRegistryDaoBean implements BeehiveRegistryDao {
       entityManager.persist(entry);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -70,7 +70,7 @@ public class BeehiveRegistryDaoBean implements BeehiveRegistryDao {
       entityManager.remove(entry);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 }

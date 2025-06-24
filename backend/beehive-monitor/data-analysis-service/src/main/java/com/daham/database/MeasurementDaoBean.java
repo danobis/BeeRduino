@@ -33,7 +33,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       return Optional.ofNullable(entityManager.find(Measurement.class, id));
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -43,7 +43,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       return entityManager.createQuery("SELECT m FROM Measurement m", Measurement.class).getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -53,7 +53,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       return entityManager.merge(measurement);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -63,7 +63,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       entityManager.persist(measurement);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -73,7 +73,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       entityManager.remove(measurement);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -112,7 +112,7 @@ public class MeasurementDaoBean implements MeasurementDao {
       return query.getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 }

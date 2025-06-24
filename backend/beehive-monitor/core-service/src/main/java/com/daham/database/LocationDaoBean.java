@@ -30,7 +30,7 @@ public class LocationDaoBean implements LocationDao {
       return Optional.ofNullable(entityManager.find(Location.class, id));
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -40,7 +40,7 @@ public class LocationDaoBean implements LocationDao {
       return entityManager.createQuery("SELECT l FROM Location l", Location.class).getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -50,7 +50,7 @@ public class LocationDaoBean implements LocationDao {
       return entityManager.merge(location);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -60,7 +60,7 @@ public class LocationDaoBean implements LocationDao {
       entityManager.persist(location);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -70,7 +70,7 @@ public class LocationDaoBean implements LocationDao {
       entityManager.remove(location);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 }

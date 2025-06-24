@@ -31,7 +31,7 @@ public class OwnerDaoBean implements OwnerDao {
       return Optional.ofNullable(entityManager.find(Owner.class, id));
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -41,7 +41,7 @@ public class OwnerDaoBean implements OwnerDao {
       return entityManager.createQuery("SELECT o FROM Owner o", Owner.class).getResultList();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -51,7 +51,7 @@ public class OwnerDaoBean implements OwnerDao {
       return entityManager.merge(owner);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -61,7 +61,7 @@ public class OwnerDaoBean implements OwnerDao {
       entityManager.persist(owner);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -71,7 +71,7 @@ public class OwnerDaoBean implements OwnerDao {
       entityManager.remove(owner);
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 
@@ -86,7 +86,7 @@ public class OwnerDaoBean implements OwnerDao {
       return Optional.empty();
     } catch (PersistenceException e) {
       log.error("DataAccessException, ERROR", e);
-      throw new DataAccessException(e.toString());
+      throw new DataAccessException(e.getMessage());
     }
   }
 }
