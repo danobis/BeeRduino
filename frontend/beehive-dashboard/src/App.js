@@ -305,6 +305,10 @@ function App() {
 
   const chartOptions = (title) => ({
     responsive: true,
+    animation: {
+      duration: 500,
+      easing: 'easeOutQuart',
+    },
     plugins: {
       legend: { position: 'top' },
       title: { display: true, text: title },
@@ -369,24 +373,26 @@ function App() {
 
       {/* Charts für jeden Sensor */}
       {BACKEND_KEYS.map((bk) => {
-        const frontKey = BACKEND_TO_FRONT[bk];
-        const label = frontKey ? SENSOR_LABELS[frontKey] : bk;
-        const color = frontKey ? SENSOR_COLORS[frontKey] : '#333';
-        const dataArr = dataPoints[bk] || [];
+  const frontKey = BACKEND_TO_FRONT[bk];
+  const label = frontKey ? SENSOR_LABELS[frontKey] : bk;
+  const color = frontKey ? SENSOR_COLORS[frontKey] : '#333';
+  const dataArr = dataPoints[bk] || [];
 
-        return (
-          <div style={{ marginBottom: '3rem' }} key={bk}>
-            <Line
-              // key sorgt für Remount bei neuem Timestamp, falls ChartJS sonst nicht neu zeichnet
-              key={`${bk}-${latestData[bk + '_time']?.getTime()}`}
-              data={makeChartData(`${label} Over Time`, dataArr, color)}
-              options={chartOptions(`${label} Over Time`)}
-            />
-          </div>
-        );
-      })}
+  return (
+    <div style={{ marginBottom: '3rem' }} key={bk}>
+      {/* Changed here: removed timestamp-based key */}
+      <Line
+        key={bk}
+        data={makeChartData(`${label} Over Time`, dataArr, color)}
+        options={chartOptions(`${label} Over Time`)}
+      />
+    </div>
+      );
+    })}
     </div>
   );
 }
+
+
 
 export default App;
