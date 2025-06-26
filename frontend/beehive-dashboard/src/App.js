@@ -380,7 +380,6 @@ function App() {
 
   return (
     <div style={{ marginBottom: '3rem' }} key={bk}>
-      {/* Changed here: removed timestamp-based key */}
       <Line
         key={bk}
         data={makeChartData(`${label} Over Time`, dataArr, color)}
