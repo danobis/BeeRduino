@@ -32,7 +32,7 @@ public class DataCollectorService {
   public void publishMeasurement(Measurement measurement) {
     var outputJson = ObjectMapperUtils.map(measurement, MeasurementOutputJson.class);
     try (var response = client.publishMeasurement(outputJson)) {
-      log.debug("REST single publish response is: {}", response.readEntity(String.class));
+      log.info("REST single publish response is: {}", response.readEntity(String.class));
     } catch (Exception e) {
       log.error("Unable to publish measurement, ERROR", e);
       throw e; // rethrow to trigger retry
@@ -43,7 +43,7 @@ public class DataCollectorService {
   public void publishMeasurements(List<Measurement> measurements) {
     var outputJson = ObjectMapperUtils.mapAll(measurements, MeasurementOutputJson.class);
     try (var response = client.publishMeasurements(outputJson)) {
-      log.debug("REST batch publish response is: {}", response.readEntity(String.class));
+      log.info("REST batch publish response is: {}", response.readEntity(String.class));
     } catch (Exception e) {
       log.error("Unable to publish measurements, ERROR", e);
       throw e; // rethrow to trigger retry

@@ -137,7 +137,6 @@ services:
         condition: service_healthy
     environment:
       - QUARKUS_PROFILE=prod
-      - QUARKUS_HTTP_HOST=core-service
       - QUARKUS_HTTP_PORT=8081
       - DATABASE_USERNAME=${MARIADB1_USER:-mariadb}
       - DATABASE_PASSWORD=${MARIADB1_PASSWORD:-Passme1234!}
@@ -174,7 +173,6 @@ services:
         condition: service_healthy
     environment:
       - QUARKUS_PROFILE=prod
-      - QUARKUS_HTTP_HOST=data-analysis-service
       - QUARKUS_HTTP_PORT=8082
       - DATABASE_USERNAME=${MARIADB2_USER:-mariadb}
       - DATABASE_PASSWORD=${MARIADB2_PASSWORD:-Passme1234!}
@@ -208,10 +206,9 @@ services:
       rabbitmq:
         condition: service_healthy
       data-analysis-service:
-        condition: service_healthy
+        condition: service_started
     environment:
       - QUARKUS_PROFILE=prod
-      - QUARKUS_HTTP_HOST=data-collector-service1
       - QUARKUS_HTTP_PORT=8083
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
@@ -242,10 +239,9 @@ services:
       rabbitmq:
         condition: service_healthy
       data-analysis-service:
-        condition: service_healthy
+        condition: service_started
     environment:
       - QUARKUS_PROFILE=prod
-      - QUARKUS_HTTP_HOST=data-collector-service2
       - QUARKUS_HTTP_PORT=8084
       - RABBITMQ_HOST=rabbitmq
       - RABBITMQ_PORT=5672
@@ -287,28 +283,6 @@ services:
       - SPRING_CLOUD_CONSUL_HEALTH_CHECK_HOST=gateway-service
       - SPRING_APPLICATION_NAME=gateway-service
       - SERVER_PORT=8080
-    networks:
-      - shared-network
-
-  data-producer-service:
-    build:
-      context: ../data-producer-service
-      dockerfile: src/main/docker/Dockerfile.jvm
-    container_name: data-producer-service
-    restart: unless-stopped
-    depends_on:
-      data-analysis-service:
-        condition: service_healthy
-      data-collector-service1:
-        condition: service_healthy
-      data-collector-service2:
-        condition: service_healthy
-      gateway-service:
-        condition: service_started
-    environment:
-      - DATABASE_USERNAME=${H2_USERNAME:-h2}
-      - DATABASE_PASSWORD=${H2_PASSWORD:-Passme1234!}
-      - DATA_COLLECTOR_SERVICE_URL=http://gateway-service:8080
     networks:
       - shared-network
 

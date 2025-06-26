@@ -2,6 +2,11 @@
 
 Dieses Repository enthält eine verteilte Anwendung zur Erfassung, Verarbeitung und Bereitstellung von Messwerten (z. B. von Sensoren in Bienenstöcken) inklusive einer Stammdatenverwaltung für Bienenstöcke. Die Architektur basiert auf mehreren Microservices, die mittels Quarkus und Spring Boot implementiert wurden.
 
+## Vorstudie
+1. [stork-quickstart](./stork-quickstart/README.md)
+2. [stork-kubernetes-quickstart](./stork-kubernetes-quickstart/README.md)
+1. [stork-demo](./stork-demo/README.md)
+
 ## Überblick der Services
 
 ![beehive-monitor](./docs/images/beehive-monitor-light.png)

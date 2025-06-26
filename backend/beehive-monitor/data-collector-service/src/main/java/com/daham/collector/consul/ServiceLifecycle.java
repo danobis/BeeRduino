@@ -27,14 +27,11 @@ public class ServiceLifecycle {
   @ConfigProperty(name = "quarkus.application.name")
   String name;
 
-  @ConfigProperty(name = "quarkus.http.host", defaultValue = "localhost")
-  String host;
-
   @ConfigProperty(name = "quarkus.http.port")
   Integer port;
 
   @ConfigProperty(name = "consul.service.health-check.host", defaultValue = "localhost")
-  String healthCheckHost;
+  String host;
 
   @ConfigProperty(name = "consul.service.health-check.interval", defaultValue = "10s")
   String interval;
@@ -61,14 +58,14 @@ public class ServiceLifecycle {
         }
         var id = "%s-%d".formatted(name, port);
         var checkOptions = new CheckOptions()
-            .setHttp("http://%s:%d/q/health".formatted(healthCheckHost, port))
+            .setHttp("http://%s:%d/q/health".formatted(host, port))
             .setInterval(interval)
             .setDeregisterAfter(deregisterAfter);
         var serviceOptions = new ServiceOptions()
             .setCheckOptions(checkOptions)
             .setTags(tags)
             .setPort(port)
-            .setAddress(host)
+            .setAddress("localhost")
             .setName(name)
             .setId(id);
         consulClient.get().registerServiceAndAwait(serviceOptions);
