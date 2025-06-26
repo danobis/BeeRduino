@@ -1,0 +1,4 @@
+#pragma once
+
+constexpr char SECRET_APP_EUI[17] = "70B3D57ED00201A6";
+constexpr char SECRET_APP_KEY[33] = "8D7F4E3A2B1C9D4F0A1E6B7C8F9A1B2C";
