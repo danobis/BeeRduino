@@ -1,0 +1,36 @@
+type MeasurementOutputJson {
+  beehive_uuid: String
+  owner_uuid: String
+  timestamp: String
+  type: String
+  unit: String
+  uuid: String
+  value: Float!
+}
+
+"Query root"
+type Query {
+  get_measurements(beehive_uuid: String, history_span: HistorySpan, sensor_type: SensorType): [MeasurementOutputJson]
+}
+
+"Subscription root"
+type Subscription {
+  on_measurement(beehive_uuid: String, sensor_type: SensorType): MeasurementOutputJson
+}
+
+enum HistorySpan {
+  DEFAULT
+  LAST_5DAYS
+  LAST_5HOURS
+  LAST_5MINUTES
+  LAST_5SECONDS
+}
+
+enum SensorType {
+  DEFAULT
+  HUMIDITY_INSIDE
+  HUMIDITY_OUTSIDE
+  TEMPERATURE_INSIDE
+  TEMPERATURE_OUTSIDE
+  WEIGHT
+}

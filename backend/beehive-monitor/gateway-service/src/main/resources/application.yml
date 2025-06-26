@@ -1,0 +1,152 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    consul:
+      host: ${SPRING_CLOUD_CONSUL_HOST:localhost}
+      port: 8500
+      discovery:
+        enabled: true
+        register: true
+        service-name: ${spring.application.name}
+        instance-id: ${spring.application.name}:${random.int}
+        hostname: ${SPRING_CLOUD_CONSUL_HEALTH_CHECK_HOST:host.docker.internal}
+        health-check-interval: 10s
+        health-check-timeout: 5s
+        health-check-path: /actuator/health
+        tags:
+          - gateway
+          - graphql
+          - rest
+
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - HEAD
+            allowedHeaders: "*"
+            allowCredentials: true
+            maxAge: 3600
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+
+      routes:
+        - id: graphql-core
+          uri: lb://core-service
+          predicates:
+            - Path=/gateway/graphql/core/**
+          filters:
+            - RewritePath=/gateway/graphql/core(?<remaining>/?.*), /graphql${remaining}
+            - AddRequestHeader=X-Gateway-Route, core-service
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET,POST
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+
+        - id: graphql-analysis
+          uri: lb://data-analysis-service
+          predicates:
+            - Path=/gateway/graphql/analysis/**
+          filters:
+            - RewritePath=/gateway/graphql/analysis(?<remaining>/?.*), /graphql${remaining}
+            - AddRequestHeader=X-Gateway-Route, data-analysis-service
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET,POST
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+
+        - id: analysis-subscription
+          uri: lb:ws://data-analysis-service
+          predicates:
+            - Path=/gateway/ws/analysis/**
+          filters:
+            - RewritePath=/gateway/ws/analysis(?<remaining>/?.*), /graphql${remaining}
+
+        - id: data-collector
+          uri: lb://data-collector-service
+          predicates:
+            - Path=/gateway/collector
+          filters:
+            - RewritePath=/gateway/collector(?<remaining>/.*)? , /measurements${remaining}
+            - AddRequestHeader=X-Gateway-Route, data-collector-service
+            - name: Retry
+              args:
+                retries: 3
+                methods: POST
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+
+        - id: data-collector-batch
+          uri: lb://data-collector-service
+          predicates:
+            - Path=/gateway/collector/batch
+          filters:
+            - RewritePath=/gateway/collector/batch(?<remaining>/.*)? , /measurements/batch${remaining}
+            - AddRequestHeader=X-Gateway-Route, data-collector-service
+            - name: Retry
+              args:
+                retries: 3
+                methods: POST
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
+
+        - id: core-health
+          uri: lb://core-service
+          predicates:
+            - Path=/gateway/health/core
+          filters:
+            - RewritePath=/gateway/health/core, /q/health
+
+        - id: analysis-health
+          uri: lb://data-analysis-service
+          predicates:
+            - Path=/gateway/health/analysis
+          filters:
+            - RewritePath=/gateway/health/analysis, /q/health
+
+        - id: data-collector-health
+          uri: lb://data-collector-service
+          predicates:
+            - Path=/gateway/health/collector
+          filters:
+            - RewritePath=/gateway/health/collector, /q/health
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway,refresh
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+    gateway:
+      access: unrestricted
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    org.springframework.cloud.consul: INFO
+    reactor.netty: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
