@@ -16,8 +16,6 @@ BeeRduino ist ein intelligentes Monitoring-System für Bienenstöcke, das auf mo
 
 Das System besteht aus drei Kernkomponenten:
 
-![BeeRduino](https://github.com/user-attachments/assets/c8d18df3-7c8c-4691-ad6e-044852016fcc)
-
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden über das MQTT-Protokoll drahtlos an das Backend gesendet.
 
 - **Backend Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
@@ -42,71 +40,102 @@ Das System besteht aus drei Kernkomponenten:
 
 ---
 
-## 3. Ergebnisse
+## 3. Implementierung
 
-- Ein **funktionierender Prototyp**, der die automatisierte Erfassung und Überwachung von Bienenstöcken ermöglicht.
+### 3.1 Hardware und Sensorik
 
-- **Echtzeit-Visualisierung** von Temperatur, Luftfeuchtigkeit und Gewicht im Frontend mit historischen Trendanalysen.
+Der zentrale Sensor für die Gewichtsmessung des Bienenstocks ist die sogenannte Wägesensorplattform basierend auf vier einzelnen Dehnungsmessstreifen (Load Cells). Diese sind an den Ecken einer stabilen Platte befestigt und erfassen so das Gewicht des darauf stehenden Bienenstocks sehr präzise.
 
-- **Modulare Architektur**, die einfach um weitere Sensoren oder Funktionen erweitert werden kann.
+![Waage mit angebrachtem Sensor](./assembly-photos/IMG_4644.png)
 
-- **Robuste Datenverarbeitung** durch asynchrone Kommunikation mit RabbitMQ und automatische Wiederholung fehlgeschlagener Datenübertragungen.
+Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten Dehnungsmessstreifen. Die dünnen Drähte führen zu einem kleinen Messverstärker.
 
-- Als nächster Schritt ist die Integration von **LoRa-Funktechnik** geplant, um die Reichweite der Sensordatenübertragung zu erhöhen, sowie eine verbesserte Unterstützung für frisch besiedelte Bienenstöcke.
+![Gewichtssensor (Load Cell)](./assembly-photos/IMG_4645.png)
+
+Hier ist eine der vier Load Cells im Detail zu sehen. Diese Sensoren messen die Belastung durch eine Veränderung ihres elektrischen Widerstands.
+
+Für die Auswertung der Sensorsignale nutzen wir einen HX711-Verstärkerchip, der die sehr kleinen elektrischen Änderungen verstärkt und digitalisiert.
+
+![Arduino-Schaltkreis mit angeschlossener Load Cell](./assembly-photos/arduino-circuit.png)
+
+Das Schaltbild zeigt die Verbindung der vier Load Cells mit dem HX711-Modul, das wiederum an einen Arduino Uno angeschlossen ist. Die Lastsensoren sind parallel verschaltet und liefern ein kombiniertes Signal. Der HX711 wandelt das analoge Signal in digitale Werte um, die der Arduino ausliest.
+
+![Lastzellen-Verkabelung mit HX711](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
+
+Diese Grafik visualisiert die genaue Verdrahtung der Load Cells: Jeder Sensor hat vier Anschlüsse (E+, E-, A+, A-), die zusammen mit dem HX711 verbunden sind. Die Signale werden so kombiniert und an den Arduino weitergeleitet.
+
+### 3.2 Lötarbeiten und Montage
+
+Eine wichtige Phase der Implementierung war das Löten der feinen Drähte an die Lastsensoren und den HX711-Verstärker. Aufgrund der geringen Größe der Bauteile und der Drahtstärke erfordert dies sorgfältiges Arbeiten und gutes Equipment.
+
+![Lötarbeiten am Gewichtssensor](./assembly-photos/IMG_4648.jpg)
+
+Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine präzise verlötet werden. Ein stabiler und dauerhafter Kontakt ist hier essenziell, da sonst Messfehler oder Ausfälle auftreten könnten.
 
 ---
 
-## 4. Implementierung
+### 3.3 Arduino Firmware
 
-### 4.1 Arduino Firmware
+Die Firmware auf dem Arduino ist verantwortlich für:
 
-- Nutzung von DHT22-Sensoren für Temperatur und Luftfeuchtigkeit innen und außen am Bienenstock.
-- Wägesensor (HX711) zur Gewichtsmessung mit Kalibrierungslogik.
-- Debugging über serielle Schnittstelle.
-- Daten werden alle 2 Sekunden ausgelesen und als JSON via MQTT gesendet.
+- Das zyklische Auslesen der Temperatur- und Luftfeuchtigkeitssensoren (DHT22), jeweils innen und außen am Bienenstock.
+- Das Auslesen der Gewichtswerte vom HX711-Signalwandler.
+- Die Fehlerüberprüfung bei Sensorablesungen, um ungültige Messwerte auszuschließen.
+- Die Ausgabe der Messwerte auf die serielle Schnittstelle zur lokalen Überwachung im Debugmodus.
+- Die Übertragung der gesammelten Daten per MQTT an das Backend.
 
-### 4.2 Backend Microservices
+Die Software ist modular aufgebaut und nutzt Debug-Makros, um im Entwicklungsmodus umfangreiche Informationen auszugeben. Das Hauptprogramm liest alle zwei Sekunden alle Sensorwerte und führt die Berechnung eines Wärmeindex durch, der das thermische Empfinden besser beschreibt als reine Temperaturwerte.
 
-- Quarkus-basierte Microservices mit GraphQL API.
-- RabbitMQ als zentrales Message-Broker-System.
-- MariaDB-Datenbanken für Stammdaten und Zeitreihendaten.
-- Fallback-Mechanismus im Producer-Service mit H2-Datenbank zur Speicherung nicht übermittelter Messwerte.
+---
 
-### 4.3 Frontend
+### 3.4 Backend Microservices
 
-- React Webanwendung mit Apollo Client für GraphQL-Integration.
-- Chart.js für Zeitreihendiagramme mit Live-Updates via GraphQL-Subscriptions.
-- Dynamische Anzeige aktueller Messwerte mit Farbkodierung für Grenzwerte.
+Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spring Boot implementiert sind:
+
+- **Core-Service**: Verwaltung der Stammdaten der Bienenstöcke, Registrierung neuer Völker und zentrale Schnittstelle für Client-Anfragen.
+
+- **Data-Collector-Service**: Nimmt die Sensordaten entgegen, empfängt sie via REST API vom Gateway und verteilt sie über RabbitMQ asynchron an weitere Services.
+
+- **Data-Analysis-Service**: Speichert die Zeitreihen-Daten persistent in einer MariaDB-Datenbank, bietet Abfrage- und Echtzeit-Subscription-APIs via GraphQL.
+
+- **Gateway-Service**: Verbindet Data-Producers mit Data-Collector-Services, sorgt für Load Balancing und Health Checks, registriert sich und verwaltet dynamisch Service-Endpoints über Consul.
+
+Diese Microservice-Architektur gewährleistet Skalierbarkeit, hohe Verfügbarkeit und Ausfallsicherheit.
+
+---
+
+### 3.5 Frontend Webanwendung
+
+Das Frontend ist eine moderne React-basierte Webanwendung, die:
+
+- Die Sensordaten in Echtzeit per GraphQL Subscription empfängt.
+- Historische Messwerte per GraphQL Query abruft.
+- Zeitreihendiagramme mit Chart.js visualisiert, farblich differenziert nach Sensortyp.
+- Aktuelle Messwerte in übersichtlichen Kacheln mit Zeitstempel anzeigt.
+- Die Bedienung intuitiv gestaltet, sodass Imker schnell den Zustand ihrer Bienenstöcke überblicken können.
+
+---
+
+## 4. Ergebnisse
+
+- Ein funktionierender Prototyp für automatisierte Erfassung und Überwachung von Bienenstöcken wurde realisiert.
+- Die intuitive Web-Oberfläche erlaubt das Monitoring in Echtzeit und die Analyse von Trends.
+- Das System ist modular aufgebaut und kann leicht um weitere Sensoren oder Funktionen erweitert werden.
+- Die Datenverarbeitung ist robust, da Messwerte bei Verbindungsproblemen zwischengespeichert und später automatisch nachgesendet werden.
+- Als nächste Schritte planen wir den Live-Datenversand über LoRa und eine bessere Unterstützung für frisch besiedelte Bienenstöcke.
 
 ---
 
 ## 5. Fazit und Ausblick
 
-BeeRduino zeigt, wie moderne IoT- und Cloud-Technologien genutzt werden können, um eine bisher manuell betriebene Domäne wie die Imkerei effizienter und zuverlässiger zu gestalten. 
+BeeRduino zeigt eindrucksvoll, wie moderne IoT-Technologien und Microservice-Architekturen in der Imkerei einen echten Mehrwert schaffen können. Unser Prototyp bietet Imkern eine zuverlässige und skalierbare Lösung zur Überwachung ihrer Bienenvölker, die frühzeitige Maßnahmen bei kritischen Zuständen ermöglicht.
 
-Unser Prototyp ermöglicht es Imkern, schnell und unkompliziert den Zustand ihrer Bienenvölker zu überwachen und frühzeitig auf kritische Zustände zu reagieren. 
-
-In Zukunft wollen wir die Lösung durch LoRa-Funktechnik erweitern, die Batterielaufzeit verbessern und Algorithmen zur automatisierten Anomalieerkennung integrieren. Zudem planen wir eine mobile App für noch mehr Benutzerfreundlichkeit.
+In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit optimieren und eine automatisierte Anomalieerkennung implementieren. Auch eine mobile App ist angedacht, um die Bedienbarkeit weiter zu verbessern.
 
 ---
 
-## 6. Marketingfotos
-
-Im Folgenden sind die Fotos und Videos zur Hardware-Installation und zum Betrieb des BeeRduino-Systems aufgeführt, die zur Veranschaulichung und für das Marketing auf der Studiengangs-Homepage verwendet werden können.
-
-- ![HX711 Load Cell Diagram](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
-- ![IMG_4644.png](./assembly-photos/IMG_4644.png)
-- ![IMG_4645.png](./assembly-photos/IMG_4645.png)
-- Video: [IMG_4648.MOV](./assembly-photos/IMG_4648.MOV)
-- ![IMG_4648.jpg](./assembly-photos/IMG_4648.jpg)
-- ![RCIZ3525.JPG](./assembly-photos/RCIZ3525.JPG)
-- ![Arduino Circuit](./assembly-photos/arduino-circuit.png)
+*Diese Dokumentation wurde im Rahmen des BeeRduino-Projekts im Studiengang [Studiengangsname] erstellt.*
 
 ---
 
-*Hinweis: Die Verwendung dieser Fotos erfolgt mit Einverständnis des Teams und darf für die Studiengangs-Homepage verwendet werden.*
-
----
-
-*Diese Dokumentation wurde im Rahmen des Projekts BeeRduino im Studiengang [Studiengangsname] erstellt.*
-
+*Hinweis: Die Fotos wurden mit Einverständnis des Teams für die Veröffentlichung auf der Studiengangs-Homepage bereitgestellt.*
