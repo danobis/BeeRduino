@@ -95,7 +95,6 @@ In Zukunft wollen wir die Lösung durch LoRa-Funktechnik erweitern, die Batterie
 Im Folgenden sind die Fotos und Videos zur Hardware-Installation und zum Betrieb des BeeRduino-Systems aufgeführt, die zur Veranschaulichung und für das Marketing auf der Studiengangs-Homepage verwendet werden können.
 
 - ![HX711 Load Cell Diagram](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
-- Video: [IMG_4641.MOV](./assembly-photos/IMG_4641.MOV)
 - ![IMG_4644.png](./assembly-photos/IMG_4644.png)
 - ![IMG_4645.png](./assembly-photos/IMG_4645.png)
 - Video: [IMG_4648.MOV](./assembly-photos/IMG_4648.MOV)
