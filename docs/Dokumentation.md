@@ -74,7 +74,7 @@ Eine wichtige Phase der Implementierung war das Löten der feinen Drähte an die
 
 ![Lötarbeiten am Gewichtssensor](./assembly-photos/IMG_4648.jpg)
 
-Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine verlötet werden. Ein stabiler und dauerhafter Kontakt ist hier essenziell, um Messfehler oder Ausfälle zu verhindern.
+Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine verlötet werden.
 
 ---
 
