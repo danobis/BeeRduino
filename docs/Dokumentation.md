@@ -40,13 +40,9 @@ Das System besteht aus drei Kernkomponenten:
 
 ### 2.2 Technische Highlights
 
-- **Datenfluss**: Sensordaten werden auf dem Arduino ausgelesen, als JSON publiziert, vom Backend aufgenommen, in RabbitMQ verteilt und in MariaDB-Datenbanken gespeichert.
+Die Sensordaten werden direkt auf dem Arduino ausgelesen und als JSON-Nachrichten an unser Backend gesendet. Dort fängt ein Service die Daten auf, verteilt sie über RabbitMQ an verschiedene Services und speichert sie schließlich in MariaDB-Datenbanken. Das sorgt für eine saubere Trennung und ermöglicht eine effiziente Verarbeitung selbst bei hohen Datenmengen.
 
-- **Fehlertoleranz**: Der Data-Producer speichert Messwerte lokal in einer eingebetteten H2-Datenbank, falls die Netzwerkverbindung unterbrochen ist, und sendet diese später automatisch nach.
-
-- **GraphQL Schnittstellen**: Ermöglichen flexible Abfragen historischer Daten und Subscriptions für Echtzeit-Updates. Das Backend kann auch Dummy-Daten generieren, was sich beim Testen als sehr hilfreich herausstellte.
-
-- **Service Discovery & Skalierbarkeit**: Konsul steuert die dynamische Erkennung und Lastverteilung der Microservice-Instanzen.
+Ein besonderer Pluspunkt ist die eingebaute Fehlertoleranz: Sollte die Netzwerkverbindung temporär ausfallen, speichert der Data-Producer die Messwerte lokal in einer kleinen H2-Datenbank. Sobald die Verbindung wieder steht, werden die Daten automatisch nachgesendet. Mithilfe der GraphQL-Schnittstelle können sowohl historische Daten als auch Echtzeit-Updates per Subscriptions abgefragt werden. Praktisch ist dabei auch, dass das Backend Dummy-Daten erzeugen kann, was beim Testen enorm geholfen. Consul sorgt dafür, dass alle Microservices sich automatisch finden und die Lastverteilung im System dynamisch funktioniert, was die Skalierbarkeit erheblich verbessert.
 
 ---
 
