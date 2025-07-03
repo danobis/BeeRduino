@@ -36,7 +36,7 @@ Das System besteht aus drei Kernkomponenten:
 
 ### 2.2 Technische Highlights
 
-- **Datenfluss**: Sensordaten werden auf dem Arduino ausgelesen, als JSON MQTT publiziert, vom Backend aufgenommen, in RabbitMQ verteilt und in MariaDB-Datenbanken gespeichert.
+- **Datenfluss**: Sensordaten werden auf dem Arduino ausgelesen, als JSON publiziert, vom Backend aufgenommen, in RabbitMQ verteilt und in MariaDB-Datenbanken gespeichert.
 
 - **Fehlertoleranz**: Der Data-Producer speichert Messwerte lokal in einer eingebetteten H2-Datenbank, falls die Netzwerkverbindung unterbrochen ist, und sendet diese später automatisch nach.
 
@@ -80,7 +80,7 @@ Eine wichtige Phase der Implementierung war das Löten der feinen Drähte an die
 
 ![Lötarbeiten am Gewichtssensor](./assembly-photos/IMG_4648.jpg)
 
-Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine präzise verlötet werden. Ein stabiler und dauerhafter Kontakt ist hier essenziell, da sonst Messfehler oder Ausfälle auftreten könnten.
+Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine verlötet werden. Ein stabiler und dauerhafter Kontakt ist hier essenziell, um Messfehler oder Ausfälle zu verhindern.
 
 ---
 
@@ -92,7 +92,7 @@ Die Firmware auf dem Arduino ist verantwortlich für:
 - Das Auslesen der Gewichtswerte vom HX711-Signalwandler.
 - Die Fehlerüberprüfung bei Sensorablesungen, um ungültige Messwerte auszuschließen.
 - Die Ausgabe der Messwerte auf die serielle Schnittstelle zur lokalen Überwachung im Debugmodus.
-- Die Übertragung der gesammelten Daten per MQTT an das Backend.
+- Die Übertragung der gesammelten Daten an das Backend.
 
 Die Software ist modular aufgebaut und nutzt Debug-Makros, um im Entwicklungsmodus umfangreiche Informationen auszugeben. Das Hauptprogramm liest alle zwei Sekunden alle Sensorwerte und führt die Berechnung eines Wärmeindex durch, der das thermische Empfinden besser beschreibt als reine Temperaturwerte.
 
