@@ -16,6 +16,8 @@ BeeRduino ist ein intelligentes Monitoring-System für Bienenstöcke, das auf mo
 
 Das System besteht aus drei Kernkomponenten:
 
+![BeeRduino](https://github.com/user-attachments/assets/8db04b61-08db-4bc5-b58f-310a386d31c3)
+
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden über das MQTT-Protokoll drahtlos an das Backend gesendet.
 
 - **Backend Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
