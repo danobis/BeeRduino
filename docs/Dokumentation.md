@@ -4,7 +4,7 @@
 
 Die traditionelle Imkerei steht vor großen Herausforderungen bei der Überwachung der Bienenvölker. Wichtige Umweltparameter wie Temperatur, Luftfeuchtigkeit und Gewicht der Bienenstöcke werden häufig manuell, unregelmäßig oder gar nicht erfasst. Dies erschwert die rechtzeitige Erkennung von Problemen wie Krankheiten, Schädlingen oder Umwelteinflüssen, die die Gesundheit und Produktivität der Bienen negativ beeinflussen können. Die Folge sind nicht nur wirtschaftliche Verluste für Imkerinnen und Imker, sondern auch eine Bedrohung der ökologischen Vielfalt und des Ökosystems.
 
-Daher besteht ein großer Bedarf an einer automatisierten, verlässlichen und skalierbaren Lösung zur kontinuierlichen Überwachung von Bienenstöcken in Echtzeit.
+Daher besteht ein großer Bedarf an einer automatisierten und verlässlichen Lösung zur kontinuierlichen Überwachung von Bienenstöcken in Echtzeit.
 
 ---
 
@@ -15,6 +15,8 @@ Daher besteht ein großer Bedarf an einer automatisierten, verlässlichen und sk
 BeeRduino ist ein intelligentes Monitoring-System für Bienenstöcke, das auf moderner Sensorik und einer Cloud-nativen Microservice-Architektur basiert. Unser Ziel war es, eine ganzheitliche Lösung zu schaffen, die von der Datenerfassung direkt am Bienenstock bis zur intuitiven Visualisierung der Messwerte reicht.
 
 Das System besteht aus drei Kernkomponenten:
+
+![BeeRduino](https://github.com/user-attachments/assets/c8d18df3-7c8c-4691-ad6e-044852016fcc)
 
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden über das MQTT-Protokoll drahtlos an das Backend gesendet.
 
@@ -90,7 +92,20 @@ In Zukunft wollen wir die Lösung durch LoRa-Funktechnik erweitern, die Batterie
 
 ## 6. Marketingfotos
 
-(Beigefügte Fotos der Hardware-Installation, des Frontend-Dashboards und des Betriebs in der Praxis)
+Im Folgenden sind die Fotos und Videos zur Hardware-Installation und zum Betrieb des BeeRduino-Systems aufgeführt, die zur Veranschaulichung und für das Marketing auf der Studiengangs-Homepage verwendet werden können.
+
+- ![HX711 Load Cell Diagram](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
+- Video: [IMG_4641.MOV](./assembly-photos/IMG_4641.MOV)
+- ![IMG_4644.png](./assembly-photos/IMG_4644.png)
+- ![IMG_4645.png](./assembly-photos/IMG_4645.png)
+- Video: [IMG_4648.MOV](./assembly-photos/IMG_4648.MOV)
+- ![IMG_4648.jpg](./assembly-photos/IMG_4648.jpg)
+- ![RCIZ3525.JPG](./assembly-photos/RCIZ3525.JPG)
+- ![Arduino Circuit](./assembly-photos/arduino-circuit.png)
+
+---
+
+*Hinweis: Die Verwendung dieser Fotos erfolgt mit Einverständnis des Teams und darf für die Studiengangs-Homepage verwendet werden.*
 
 ---
 
