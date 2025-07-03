@@ -50,7 +50,11 @@ Das System besteht aus drei Kernkomponenten:
 
 ### 3.1 Hardware und Sensorik
 
-Der zentrale Sensor für die Gewichtsmessung des Bienenstocks ist die sogenannte Wägesensorplattform basierend auf vier einzelnen Dehnungsmessstreifen (Load Cells). Diese sind an den Ecken einer stabilen Platte befestigt und erfassen so das Gewicht des darauf stehenden Bienenstocks sehr präzise.
+Für die Datenerfassung setzen wir auf bewährte Komponenten, die zuverlässig und stromsparend sind. Zentraler Mikrocontroller ist ein **Arduino MKR WAN 1310**, basierend auf dem SAMD21 Cortex-M0+ 32-bit ARM-Prozessor. Dieser verfügt über integriertes LoRa-Funkmodul, um in späteren Ausbaustufen auch lange Funkreichweiten zu ermöglichen.
+
+Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen und außen am Bienenstock), die Temperatur und Luftfeuchtigkeit erfassen. Die Sensoren sind als kleine Breakout-Boards montiert und bieten einen digitalen Datenausgang, der einfach mit dem Arduino verbunden werden kann.
+
+Der Gewichtssensor besteht aus vier einzelnen Dehnungsmessstreifen (Load Cells), die an den Ecken einer stabilen Platte montiert sind. Diese sind über den **HX711** Messverstärker mit dem Arduino verbunden und ermöglichen so die genaue Erfassung des Gewichts des Bienenstocks.
 
 ![Waage mit angebrachtem Sensor](./assembly-photos/IMG_4644.png)
 
@@ -64,7 +68,7 @@ Für die Auswertung der Sensorsignale nutzen wir einen HX711-Verstärkerchip, de
 
 ![Arduino-Schaltkreis mit angeschlossener Load Cell](./assembly-photos/arduino-circuit.png)
 
-Das Schaltbild zeigt die Verbindung der vier Load Cells mit dem HX711-Modul, das wiederum an einen Arduino Uno angeschlossen ist. Die Lastsensoren sind parallel verschaltet und liefern ein kombiniertes Signal. Der HX711 wandelt das analoge Signal in digitale Werte um, die der Arduino ausliest.
+Das Schaltbild zeigt die Verbindung der vier Load Cells mit dem HX711-Modul, das wiederum an einen Arduino angeschlossen ist. Die Lastsensoren sind parallel verschaltet und liefern ein kombiniertes Signal. Der HX711 wandelt das analoge Signal in digitale Werte um, die der Arduino ausliest.
 
 ![Lastzellen-Verkabelung mit HX711](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
 
@@ -129,6 +133,10 @@ Das Frontend ist eine moderne React-basierte Webanwendung, die:
 - Das System ist modular aufgebaut und kann leicht um weitere Sensoren oder Funktionen erweitert werden.
 - Die Datenverarbeitung ist robust, da Messwerte bei Verbindungsproblemen zwischengespeichert und später automatisch nachgesendet werden.
 - Als nächste Schritte planen wir den Live-Datenversand über LoRa und eine bessere Unterstützung für frisch besiedelte Bienenstöcke.
+
+Am 27. Juni 2025 wurde die **technische Präsentation** erfolgreich durchgeführt. Dabei konnte der vollständige Funktionsumfang des Systems demonstriert werden.
+
+Für die Live-Demo wurde als Substitution für einen echten Bienenstock eine Bierkiste verwendet. Diese Wahl beruhte auf zwei wichtigen Gründen: Zum einen entspricht das Gewicht einer Bierkiste in etwa dem eines Bienenstocks, sodass die Lastsensoren realistische Messwerte liefern konnten. Zum anderen minimierte die Bierkiste das Risiko von Schäden oder Störungen, die bei einem lebenden Bienenvolk auftreten könnten. Zur Kalibrierung der Wägesensoren diente ein schweres Buch als Referenzgewicht.
 
 ---
 
