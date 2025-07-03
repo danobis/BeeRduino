@@ -58,7 +58,7 @@ Für die Datenerfassung setzen wir auf bewährte Komponenten, die zuverlässig u
 
 Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen und außen am Bienenstock), die Temperatur und Luftfeuchtigkeit erfassen. Die Sensoren sind als kleine Breakout-Boards montiert und bieten einen digitalen Datenausgang, der einfach mit dem Arduino verbunden werden kann.
 
-Der Gewichtssensor besteht aus vier einzelnen Dehnungsmessstreifen (Load Cells), die an den Ecken einer stabilen Platte montiert sind. Diese sind über den **HX711** Messverstärker mit dem Arduino verbunden und ermöglichen so die genaue Erfassung des Gewichts des Bienenstocks.
+Der Gewichtssensor besteht aus vier einzelnen Dehnungsmessstreifen (Load Cells), die an den Ecken einer stabilen Platte montiert sind. Diese sind über den **HX711** Messverstärker mit dem Arduino verbunden und ermöglichen so die Erfassung des Gewichts des Bienenstocks.
 
 ![Waage mit angebrachtem Sensor](./assembly-photos/IMG_4644.png)
 
