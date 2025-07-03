@@ -36,13 +36,7 @@ Das System besteht aus drei Kernkomponenten:
 
 - **Frontend Webanwendung**: Realisiert mit React und Apollo Client, visualisiert Messdaten in Echtzeit und historisch über interaktive Zeitreihendiagramme (Chart.js). Sie bietet eine intuitive Oberfläche für Imker, um jederzeit den Zustand ihrer Bienenvölker im Blick zu behalten.
 
----
-
-### 2.2 Technische Highlights
-
-Die Sensordaten werden direkt auf dem Arduino ausgelesen und als JSON-Nachrichten an unser Backend gesendet. Dort fängt ein Service die Daten auf, verteilt sie über RabbitMQ an verschiedene Services und speichert sie schließlich in MariaDB-Datenbanken. Das sorgt für eine saubere Trennung und ermöglicht eine effiziente Verarbeitung selbst bei hohen Datenmengen.
-
-Ein besonderer Pluspunkt ist die eingebaute Fehlertoleranz: Sollte die Netzwerkverbindung temporär ausfallen, speichert der Data-Producer die Messwerte lokal in einer kleinen H2-Datenbank. Sobald die Verbindung wieder steht, werden die Daten automatisch nachgesendet. Mithilfe der GraphQL-Schnittstelle können sowohl historische Daten als auch Echtzeit-Updates per Subscriptions abgefragt werden. Praktisch ist dabei auch, dass das Backend Dummy-Daten erzeugen kann, was beim Testen enorm geholfen. Consul sorgt dafür, dass alle Microservices sich automatisch finden und die Lastverteilung im System dynamisch funktioniert, was die Skalierbarkeit erheblich verbessert.
+Die Sensordaten werden direkt auf dem Arduino ausgelesen und als JSON-Nachrichten an unser Backend gesendet. Dort fängt ein Service die Daten auf, verteilt sie über RabbitMQ an verschiedene Services und speichert sie schließlich in MariaDB-Datenbanken. Das sorgt für eine saubere Trennung und ermöglicht eine effiziente Verarbeitung selbst bei hohen Datenmengen. Mithilfe der GraphQL-Schnittstelle können sowohl historische Daten als auch Echtzeit-Updates per Subscriptions vom Frontend abgefragt werden.
 
 ---
 
@@ -110,7 +104,7 @@ Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spri
 
 - **Gateway-Service**: Verbindet Data-Producers mit Data-Collector-Services, sorgt für Load Balancing und Health Checks, registriert sich und verwaltet dynamisch Service-Endpoints über Consul.
 
-Diese Microservice-Architektur gewährleistet Skalierbarkeit, hohe Verfügbarkeit und Ausfallsicherheit.
+Ein Besonderheit ist die eingebaute Fehlertoleranz: Sollte die Netzwerkverbindung temporär ausfallen, speichert der Data-Producer die Messwerte lokal in einer kleinen H2-Datenbank. Sobald die Verbindung wieder steht, werden die Daten automatisch nachgesendet. Praktisch ist zudem, dass das Backend Dummy-Daten erzeugen kann, was beim Testen enorm geholfen hat. Consul sorgt dafür, dass die Lastverteilung im System dynamisch funktioniert, was die Skalierbarkeit verbessert.
 
 ---
 
