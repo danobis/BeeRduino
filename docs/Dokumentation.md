@@ -4,6 +4,10 @@
   <img src="https://github.com/user-attachments/assets/f67fd0d1-dd92-4d45-b6be-9ea535b3ac1a" alt="BeeRduino" width="300"/>
 </div>
 
+## Autoren
+- Daniel Hametner
+- Christopher Nobis
+
 ## 1. Problembeschreibung
 
 Die traditionelle Imkerei steht vor großen Herausforderungen bei der Überwachung der Bienenvölker. Wichtige Umweltparameter wie Temperatur, Luftfeuchtigkeit und Gewicht der Bienenstöcke werden häufig manuell, unregelmäßig oder gar nicht erfasst. Dies erschwert die rechtzeitige Erkennung von Problemen wie Krankheiten, Schädlingen oder Umwelteinflüssen, die die Gesundheit und Produktivität der Bienen negativ beeinflussen können. Die Folge sind nicht nur wirtschaftliche Verluste für Imkerinnen und Imker, sondern auch eine Bedrohung der ökologischen Vielfalt und des Ökosystems.
@@ -148,7 +152,7 @@ In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit 
 
 ---
 
-*Diese Dokumentation wurde im Rahmen des BeeRduino-Projekts im Studiengang [Studiengangsname] erstellt.*
+*Diese Dokumentation wurde im Rahmen des Lehrveranstaltung **MUS2UE: Mobile und ubiquitäre Systeme (SE.ma VZ SS25)** im Studiengang  **FH OÖ Campus Hagenberg** erstellt.*
 
 ---
 
