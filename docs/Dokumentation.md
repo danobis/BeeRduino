@@ -40,7 +40,7 @@ Das System besteht aus drei Kernkomponenten:
 
 - **Fehlertoleranz**: Der Data-Producer speichert Messwerte lokal in einer eingebetteten H2-Datenbank, falls die Netzwerkverbindung unterbrochen ist, und sendet diese später automatisch nach.
 
-- **GraphQL Schnittstellen**: Ermöglichen flexible Abfragen historischer Daten und Subscriptions für Echtzeit-Updates.
+- **GraphQL Schnittstellen**: Ermöglichen flexible Abfragen historischer Daten und Subscriptions für Echtzeit-Updates. Das Backend kann auch Dummy-Daten generieren, was sich beim Testen als sehr hilfreich herausstellte.
 
 - **Service Discovery & Skalierbarkeit**: Konsul steuert die dynamische Erkennung und Lastverteilung der Microservice-Instanzen.
 
