@@ -22,7 +22,7 @@ Das System besteht aus drei Kernkomponenten:
 
 ![BeeRduino](https://github.com/user-attachments/assets/8db04b61-08db-4bc5-b58f-310a386d31c3)
 
-- **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden über das MQTT-Protokoll drahtlos an das Backend gesendet.
+- **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden drahtlos an das Backend gesendet.
 
 - **Backend Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
   - **Core-Service** verwaltet Stammdaten der Bienenstöcke und koordiniert die Registrierung neuer Völker.
@@ -36,7 +36,7 @@ Das System besteht aus drei Kernkomponenten:
 
 ### 2.2 Technische Highlights
 
-- **Datenfluss**: Sensordaten werden auf dem Arduino ausgelesen, als JSON via MQTT publiziert, vom Backend aufgenommen, in RabbitMQ verteilt und in MariaDB-Datenbanken gespeichert.
+- **Datenfluss**: Sensordaten werden auf dem Arduino ausgelesen, als JSON MQTT publiziert, vom Backend aufgenommen, in RabbitMQ verteilt und in MariaDB-Datenbanken gespeichert.
 
 - **Fehlertoleranz**: Der Data-Producer speichert Messwerte lokal in einer eingebetteten H2-Datenbank, falls die Netzwerkverbindung unterbrochen ist, und sendet diese später automatisch nach.
 
