@@ -293,7 +293,7 @@ float hx711_read_weight()
 {
   float w = NAN;
   if (hx711_adc.update()) {
-    w = hx711_adc.getData();
+    w = max(hx711_adc.getData(), 0.0f);
   }
   return w;
 }
