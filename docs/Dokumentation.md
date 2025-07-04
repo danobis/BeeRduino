@@ -25,7 +25,7 @@ BeeRduino ist ein intelligentes Monitoring-System für Bienenstöcke, das auf mo
 Das System besteht aus drei Kernkomponenten:
 
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/8db04b61-08db-4bc5-b58f-310a386d31c3" alt="BeeRduino Übersicht" width="70%" />
+  <img src="https://github.com/user-attachments/assets/8db04b61-08db-4bc5-b58f-310a386d31c3" alt="BeeRduino Übersicht" width="90%" />
 </div>
 
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden drahtlos an das Backend gesendet.
@@ -53,25 +53,25 @@ Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen un
 Der Gewichtssensor besteht aus vier einzelnen Load Cells (Dehnungsmessstreifen), die mechanisch an den Ecken einer stabilen Plattform montiert sind. Elektrisch sind sie zu einer Wheatstone-Brücke verschaltet. Diese wird an einen **HX711**-Messverstärker angeschlossen, der das analoge Signal verstärkt, digitalisiert und an den Arduino überträgt.
 
 <div align="center">
-  <img src="./assembly-photos/IMG_4644.png" alt="Waage mit angebrachtem Sensor" width="50%" />
+  <img src="./assembly-photos/IMG_4644.png" alt="Waage mit angebrachtem Sensor" width="80%" />
 </div>
 
 Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten Load Cells. Die dünnen Drähte führen zum HX711-Messverstärker.
 
 <div align="center">
-  <img src="./assembly-photos/IMG_4645.png" alt="HX711-Modul" width="50%" />
+  <img src="./assembly-photos/IMG_4645.png" alt="HX711-Modul" width="80%" />
 </div>
 
 Hier ist das HX711-Modul zu sehen, ein präziser 24-Bit-Messverstärker für digitale Wägetechnik. An den linken Anschlussleisten (E+, E−, A+, A−) werden die Load Cells in Brückenschaltung angeschlossen. Auf der rechten Seite befinden sich die vier Pins zur Verbindung mit dem Arduino: VCC (Stromversorgung), GND (Masse), DT (Datenleitung) und SCK (Takt).
 
 <div align="center">
-  <img src="./assembly-photos/arduino-circuit.png" alt="Arduino-Schaltkreis mit angeschlossener Load Cell" width="50%" />
+  <img src="./assembly-photos/arduino-circuit.png" alt="Arduino-Schaltkreis mit angeschlossener Load Cell" width="80%" />
 </div>
 
 Das Schaltbild zeigt, wie die vier Load Cells zu einer Wheatstone-Brücke verschaltet und an den HX711 angeschlossen sind. Der HX711 verstärkt das resultierende Differenzsignal und wandelt es in digitale Werte um, die der Arduino auslesen kann.
 
 <div align="center">
-  <img src="./assembly-photos/HX711_4x50kg_load_cell_diagram.png" alt="Lastzellen-Verkabelung mit HX711" width="50%" />
+  <img src="./assembly-photos/HX711_4x50kg_load_cell_diagram.png" alt="Lastzellen-Verkabelung mit HX711" width="80%" />
 </div>
 
 Diese Grafik zeigt die Verdrahtung von vier Load Cells, die gemeinsam eine Wheatstone-Brücke bilden. Die kombinierten Signale werden an den HX711-Messverstärker weitergeleitet. Der HX711 überträgt die Messdaten über zwei digitale Leitungen (DT für Daten, SCK für Takt) an den Arduino. Zusätzlich erfolgt die Spannungsversorgung über VCC und GND.
