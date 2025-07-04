@@ -50,19 +50,19 @@ Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen un
 
 Der Gewichtssensor besteht aus vier einzelnen Load Cells (Dehnungsmessstreifen), die mechanisch an den Ecken einer stabilen Plattform montiert sind. Elektrisch sind sie zu einer Wheatstone-Brücke verschaltet. Diese wird an einen **HX711**-Messverstärker angeschlossen, der das analoge Signal verstärkt, digitalisiert und an den Arduino überträgt.
 
-![Waage mit angebrachtem Sensor](./assembly-photos/IMG_4644.png)
+<img src="./assembly-photos/IMG_4644.png" alt="Waage mit angebrachtem Sensor" width="50%" />
 
 Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten Load Cells. Die dünnen Drähte führen zum HX711-Messverstärker.
 
-![Gewichtssensor (Load Cell)](./assembly-photos/IMG_4645.png)
+<img src="./assembly-photos/IMG_4645.png" alt="HX711-Modul" width="50%" />
 
 Hier ist das HX711-Modul zu sehen, ein präziser 24-Bit-Messverstärker für digitale Wägetechnik. An den linken Anschlussleisten (E+, E−, A+, A−) werden die Load Cells in Brückenschaltung angeschlossen. Auf der rechten Seite befinden sich die vier Pins zur Verbindung mit dem Arduino: VCC (Stromversorgung), GND (Masse), DT (Datenleitung) und SCK (Takt).
 
-![Arduino-Schaltkreis mit angeschlossener Load Cell](./assembly-photos/arduino-circuit.png)
+<img src="./assembly-photos/arduino-circuit.png" alt="Arduino-Schaltkreis mit angeschlossener Load Cell" width="50%" />
 
 Das Schaltbild zeigt, wie die vier Load Cells zu einer Wheatstone-Brücke verschaltet und an den HX711 angeschlossen sind. Der HX711 verstärkt das resultierende Differenzsignal und wandelt es in digitale Werte um, die der Arduino auslesen kann.
 
-![Lastzellen-Verkabelung mit HX711](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
+<img src="./assembly-photos/HX711_4x50kg_load_cell_diagram.png" alt="Lastzellen-Verkabelung mit HX711" width="50%" />
 
 Diese Grafik zeigt die Verdrahtung von vier Load Cells, die gemeinsam eine Wheatstone-Brücke bilden. Die kombinierten Signale werden an den HX711-Messverstärker weitergeleitet. Der HX711 überträgt die Messdaten über zwei digitale Leitungen (DT für Daten, SCK für Takt) an den Arduino. Zusätzlich erfolgt die Spannungsversorgung über VCC und GND.
 
@@ -70,7 +70,7 @@ Diese Grafik zeigt die Verdrahtung von vier Load Cells, die gemeinsam eine Wheat
 
 Eine wichtige Phase der Implementierung war das Löten der feinen Drähte an die Lastsensoren und den HX711-Verstärker. Aufgrund der geringen Größe der Bauteile und der Drahtstärke erfordert dies sorgfältiges Arbeiten und gutes Equipment.
 
-![Lötarbeiten am Gewichtssensor](./assembly-photos/IMG_4648.jpg)
+<img src="./assembly-photos/IMG_4648.jpg" alt="Lötarbeiten am Gewichtssensor" width="50%" />
 
 Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine verlötet werden.
 
@@ -153,7 +153,7 @@ Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spri
 
 ### 3.5 Frontend Webanwendung
 
-Das Frontend ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über **GraphQL**, realisiert mit dem Apollo Client.
+Das Frontend trägt den Namen **BeeRduino Dashboard**. Es ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über GraphQL, realisiert mit dem **Apollo Client**.
 
 Für die Datenanbindung wird ein Split-Link verwendet, der je nach Operation zwischen einem HTTP- und einem WebSocket-Link unterscheidet:
 
@@ -183,7 +183,7 @@ Gewichtsdaten werden vor der Darstellung im Frontend von Gramm in Kilogramm umge
 
 Ein zentrales visuelles Element der Anwendung sind die **Live-Kacheln**, die den jeweils letzten Wert jedes Sensors anzeigen und den Zeitpunkt der letzten Aktualisierung mitliefern. Die Anwendung ist responsiv aufgebaut und funktioniert auf verschiedenen Bildschirmgrößen.
 
-![Bierkiste vor der Präsentation](./screenshots/Screenshot6.png)
+<img src="./screenshots/Screenshot6.png" alt="Frontend-Screenshot" width="50%" />
 
 ---
 
@@ -199,7 +199,7 @@ Am 27. Juni 2025 wurde die **technische Präsentation** erfolgreich durchgeführ
 
 Für die Live-Demo wurde als Substitution für einen echten Bienenstock eine Bierkiste verwendet. Diese Wahl beruhte auf zwei Gründen: Zum einen entspricht das Gewicht einer Bierkiste in etwa dem eines Bienenstocks, sodass die Lastsensoren realistische Messwerte liefern konnten. Zum anderen minimierte die Bierkiste das Risiko von Schäden, die bei einem lebenden Bienenvolk auftreten könnten. Zur Kalibrierung der Wägesensoren diente ein schweres Buch als Referenzgewicht.
 
-![Bierkiste vor der Präsentation](./assembly-photos/IMG_5522.HEIC)
+<img src="./assembly-photos/IMG_5522.HEIC" alt="Bierkiste vor der Präsentation" width="50%" />
 
 ---
 
