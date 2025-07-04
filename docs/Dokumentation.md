@@ -30,11 +30,7 @@ Das System besteht aus drei Kernkomponenten:
 
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden drahtlos an das Backend gesendet.
 
-- **Backend-Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
-  - **Core-Service** verwaltet Stammdaten der Bienenstöcke und koordiniert die Registrierung neuer Völker.
-  - **Data-Collector-Service** empfängt Messdaten vom Arduino via Gateway und verteilt sie asynchron per RabbitMQ.
-  - **Data-Analysis-Service** speichert und verarbeitet die Messwerte, stellt historische Daten und Live-Updates via GraphQL bereit.
-  - **Gateway-Service** fungiert als API-Gateway mit Service-Discovery (Consul) und Lastverteilung.
+- **Backend-Microservices**: Verarbeiten und speichern die Sensordaten. Sie empfangen die Messwerte via Gateway, verteilen sie über RabbitMQ, speichern sie in Datenbanken und stellen sie über eine GraphQL-API für Abfragen und Live-Updates bereit.
 
 - **Frontend-Webanwendung**: Realisiert mit React und Apollo Client, visualisiert Messdaten in Echtzeit und historisch über interaktive Zeitreihendiagramme (Chart.js). Sie bietet eine intuitive Oberfläche für Imker, um jederzeit den Zustand ihrer Bienenvölker im Blick zu behalten.
 
