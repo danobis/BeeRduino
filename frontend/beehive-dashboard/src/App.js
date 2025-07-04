@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useEffect, useState } from 'react';
 import {
   Chart as ChartJS,
@@ -23,9 +22,9 @@ ChartJS.register(
   Legend
 );
 
-// ---------- Konfiguration ----------
+// ---------- configuration ----------
 
-// Frontend-Keys (lower-case mit Präfix) für Anzeige: Labels, Farben, Units
+// frontend keys (lower case with prefix) for display: labels, colors, units
 const FRONT_KEYS = [
   'sensor_temperature_inside',
   'sensor_temperature_outside',
@@ -58,7 +57,7 @@ const SENSOR_CONFIG = {
   sensor_weight: { unit: 'kg' },
 };
 
-// Backend-Keys (uppercase) für State/Gruppierung und als Variable in Subscription
+// backend keys (uppercase) for data processing and subscription variables
 const BACKEND_KEYS = [
   'TEMPERATURE_INSIDE',
   'TEMPERATURE_OUTSIDE',
@@ -67,18 +66,18 @@ const BACKEND_KEYS = [
   'WEIGHT',
 ];
 
-// mapSensorType: Wandelt Eingabe (lower-case oder uppercase) in uppercase-Enum um.
-// Rückgabe: uppercase (z.B. "TEMPERATURE_INSIDE") oder null, wenn unbekannt.
+// mapSensorType: convert input (lower-case or uppercase) to uppercase enum.
+// returns: uppercase (e.g. "TEMPERATURE_INSIDE") or null if unknown
 function mapSensorType(sensorTypeBackend) {
   if (!sensorTypeBackend) {
     console.warn('mapSensorType: leere Eingabe');
     return null;
   }
-  // Bereits uppercase?
+  // already uppercase?
   if (BACKEND_KEYS.includes(sensorTypeBackend)) {
     return sensorTypeBackend;
   }
-  // lower-case-Fälle
+  // if lower-case
   switch (sensorTypeBackend) {
     case 'sensor_temperature_inside':
       return 'TEMPERATURE_INSIDE';
@@ -96,7 +95,7 @@ function mapSensorType(sensorTypeBackend) {
   }
 }
 
-// Reverse-Mapping: uppercase → lower-case, um Label/Farbe/Unit zu holen
+// reverse mapping: uppercase -> lower case to get label/color/unit
 const BACKEND_TO_FRONT = {};
 FRONT_KEYS.forEach((frontKey) => {
   const be = mapSensorType(frontKey);
@@ -104,9 +103,9 @@ FRONT_KEYS.forEach((frontKey) => {
     BACKEND_TO_FRONT[be] = frontKey;
   }
 });
-// Beispiel: BACKEND_TO_FRONT["TEMPERATURE_INSIDE"] === "sensor_temperature_inside"
+// example: BACKEND_TO_FRONT["HUMIDITY_OUTSIDE"] === "sensor_humidity_outside"
 
-// GraphQL-Query: historische Daten
+// GraphQL query: historical data
 const GET_MEASUREMENTS = gql`
   query GetMeasurements($beehive_uuid: String!, $history_span: HistorySpan) {
     get_measurements(beehive_uuid: $beehive_uuid, history_span: $history_span) {
@@ -119,7 +118,7 @@ const GET_MEASUREMENTS = gql`
   }
 `;
 
-// GraphQL-Subscription: eine Subscription pro Sensortyp, liefert timestamp, value, unit
+// GraphQL subscription: one subscription per sensor type, returns timestamp, value, unit
 const NEW_MEASUREMENT_SUBSCRIPTION = gql`
   subscription OnNewMeasurement($beehive_uuid: String!, $sensor_type: SensorType!) {
     on_measurement(beehive_uuid: $beehive_uuid, sensor_type: $sensor_type) {
@@ -130,19 +129,18 @@ const NEW_MEASUREMENT_SUBSCRIPTION = gql`
   }
 `;
 
-// Hilfsfunktion: formatiert Date zu Zeitstring
+// helper function to format Date to time string
 function formatTimestamp(date) {
   if (!date) return '-';
   return date.toLocaleTimeString();
 }
 
-// ---------- Hauptkomponente ----------
+// ---------- main component ----------
 
 function App() {
-  // Beispiel UUID; passe ggf. dynamisch an oder aus Props/Context holen
   const beehiveUUID = "6c5a5066-07a8-4a21-8dc2-766cbc63f0eb";
 
-  // State: dataPoints gruppiert nach uppercase-Keys, initial leere Arrays
+  // state: dataPonits grouped by uppercase keys, initially empty arrays
   const [dataPoints, setDataPoints] = useState(() => {
     const init = {};
     BACKEND_KEYS.forEach((bk) => {
@@ -150,7 +148,6 @@ function App() {
     });
     return init;
   });
-  // State: latestData[bk] und latestData[bk + "_time"]
   const [latestData, setLatestData] = useState(() => {
     const init = {};
     BACKEND_KEYS.forEach((bk) => {
@@ -160,12 +157,12 @@ function App() {
     return init;
   });
 
-  // 1. Historische Daten per Query laden
+  // 1. load historical data via Query
   const { data, loading, error } = useQuery(GET_MEASUREMENTS, {
     variables: { beehive_uuid: beehiveUUID, history_span: "LAST_5DAYS" },
   });
 
-  // 2. Live-Subscriptions: eine Hook pro Sensortyp (uppercase)
+  // 2. live subscriptions for each sensor type
   const subTemperatureInside = useSubscription(NEW_MEASUREMENT_SUBSCRIPTION, {
     variables: { beehive_uuid: beehiveUUID, sensor_type: 'TEMPERATURE_INSIDE' },
   });
@@ -182,7 +179,7 @@ function App() {
     variables: { beehive_uuid: beehiveUUID, sensor_type: 'WEIGHT' },
   });
 
-  // 3. Effekt: Verarbeitung historischer Daten, wenn Query-Daten ankommen
+  // 3. effect: processing historical data
   useEffect(() => {
     if (!data?.get_measurements) return;
     const measures = data.get_measurements;
@@ -190,7 +187,7 @@ function App() {
 
     console.log("Historische Daten empfangen:", measures.length);
 
-    // Neu initialisieren
+    // initialize
     const grouped = {};
     BACKEND_KEYS.forEach((bk) => {
       grouped[bk] = [];
@@ -206,7 +203,7 @@ function App() {
       }
       let value = m.value;
       if (mapped === "WEIGHT") {
-        // Annahme: Backend liefert Gramm → in kg umrechnen
+        // if backend returns weight in grams, convert to kg
         value = value / 1000;
       }
       grouped[mapped].push({ time, value });
@@ -217,7 +214,7 @@ function App() {
 
     setDataPoints(grouped);
 
-    // latestData aktualisieren
+    // update latest data
     const latestDisplay = {};
     BACKEND_KEYS.forEach((bk) => {
       if (latest[bk]) {
@@ -231,24 +228,23 @@ function App() {
     setLatestData(latestDisplay);
   }, [data]);
 
-  // 4. Effekt: Verarbeitung live Subscription-Daten
+  // 4. effect: process live subscription results
   useEffect(() => {
-    // Hilfsfunktion, um ein Subscription-Result zu prüfen und in State zu integrieren.
-    // Da die Subscription-Payload kein sensor_type-Feld mehr enthält, 
-    // übergeben wir hier explizit den Sensortyp, den wir abonniert haben.
+    // helper function, to handle subscription results
+    // explicitly pass the sensor type, that we subscribed to
     function handleSubscriptionResult(subRes, mappedKey) {
       if (subRes.data?.on_measurement) {
         const m = subRes.data.on_measurement;
         console.log(`Live-Update für ${mappedKey} erhalten:`, m);
 
-        // Da payload kein sensor_type enthält, nutzen wir mappedKey direkt.
+        // directly use mappedKey
         let value = m.value;
         if (mappedKey === "WEIGHT") {
           value = value / 1000;
         }
         const time = new Date(m.timestamp);
 
-        // dataPoints updaten
+        // update data points
         setDataPoints((prev) => {
           const updated = { ...prev };
           if (!Array.isArray(updated[mappedKey])) {
@@ -263,7 +259,7 @@ function App() {
           return updated;
         });
 
-        // latestData updaten
+        // update latest data
         setLatestData((prev) => ({
           ...prev,
           [mappedKey]: value,
@@ -272,14 +268,14 @@ function App() {
       }
     }
 
-    // Prüfe jede Subscription einzeln und übergebe den entsprechenden uppercase-Key
+    // check each subscription result
     handleSubscriptionResult(subTemperatureInside, 'TEMPERATURE_INSIDE');
     handleSubscriptionResult(subTemperatureOutside, 'TEMPERATURE_OUTSIDE');
     handleSubscriptionResult(subHumidityInside, 'HUMIDITY_INSIDE');
     handleSubscriptionResult(subHumidityOutside, 'HUMIDITY_OUTSIDE');
     handleSubscriptionResult(subWeight, 'WEIGHT');
 
-    // Dependencies: Subscription-Result-Objekte
+    // dependencies
   }, [
     subTemperatureInside,
     subTemperatureOutside,
@@ -288,7 +284,7 @@ function App() {
     subWeight,
   ]);
 
-  // 5. Chart-Daten-Erzeugung
+  // 5. create chart data
   const makeChartData = (label, dataArray, color) => ({
     labels: dataArray.map((dp) => formatTimestamp(dp.time)),
     datasets: [
@@ -319,19 +315,19 @@ function App() {
     },
   });
 
-  // 6. Laden- und Fehlerzustand anzeigen
+  // 6. show loading/error states
   if (loading) return <p>Loading historical data...</p>;
   if (error) return <p>Error loading data: {error.message}</p>;
 
-  // 7. Render
+  // 7. render
   return (
     <div style={{ maxWidth: 900, margin: '2rem auto', fontFamily: 'Arial, sans-serif', padding: '0 1rem' }}>
-      {/* Logo oder Header */}
+      {/* logo or header */}
       <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '1rem' }}>
         <img src="/beeRduino.png" alt="BeeRduino Logo" style={{ height: 250 }} />
       </div>
 
-      {/* Aktuelle Werte-Kacheln */}
+      {/* current value label */}
       <div
         style={{
           display: 'flex',
@@ -371,7 +367,7 @@ function App() {
         })}
       </div>
 
-      {/* Charts für jeden Sensor */}
+      {/* charts for each sensor */}
       {BACKEND_KEYS.map((bk) => {
   const frontKey = BACKEND_TO_FRONT[bk];
   const label = frontKey ? SENSOR_LABELS[frontKey] : bk;
