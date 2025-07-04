@@ -78,8 +78,6 @@ Eine wichtige Phase der Implementierung war das Löten der feinen Drähte an die
   <img src="./assembly-photos/IMG_4648.jpg" alt="Lötarbeiten am Gewichtssensor" width="50%" />
 </div>
 
-Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwischen den Drähten und der Sensorplatine verlötet werden.
-
 ---
 
 ### 3.3 Arduino Firmware
