@@ -149,7 +149,7 @@ Das Format ist binär (28 Byte) und wird über den internen LoRa-Modem des MKR
 
 ### 3.4 Backend Microservices
 
-Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spring Boot implementiert sind:
+Das Backend (`beehive-monitor`) besteht aus mehreren Microservices, die in Java mit Quarkus und Spring Boot implementiert sind:
 
 - **Core-Service**: Verwaltung der Stammdaten der Bienenstöcke, Registrierung neuer Völker und zentrale Schnittstelle für Client-Anfragen.
 
@@ -165,7 +165,7 @@ Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spri
 
 ### 3.5 Frontend Webanwendung
 
-Das Frontend trägt den Namen **BeeRduino Dashboard**. Es ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über GraphQL, realisiert mit dem **Apollo Client**.
+Das Frontend (`beehive-dashboard`) ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über GraphQL, realisiert mit dem **Apollo Client**.
 
 Für die Datenanbindung wird ein Split-Link verwendet, der je nach Operation zwischen einem HTTP- und einem WebSocket-Link unterscheidet:
 
@@ -207,7 +207,7 @@ Ein zentrales visuelles Element der Anwendung sind die **Live-Kacheln**, die den
 - Die intuitive Web-Oberfläche erlaubt das Monitoring in Echtzeit und die Analyse von Trends.
 - Das System ist modular aufgebaut und kann leicht um weitere Sensoren oder Funktionen erweitert werden.
 - Die Datenverarbeitung ist robust, da Messwerte bei Verbindungsproblemen zwischengespeichert und später automatisch nachgesendet werden.
-- Als nächste Schritte planen wir den Live-Datenversand über LoRa und eine bessere Unterstützung für frisch besiedelte Bienenstöcke. Für diesen Zweck haben wir bewusst den Arduino MKR WAN 1310 beschafft, da er die nötige LoRa-Funktionalität bietet.
+- Als nächste Schritte planen wir die Testung des Live-Datenversand über LoRa für eine bessere Unterstützung für frisch besiedelte Bienenstöcke. Für diesen Zweck haben wir bewusst den Arduino MKR WAN 1310 beschafft, da er die nötige LoRa-Funktionalität bietet.
 
 Am 27. Juni 2025 wurde die **technische Präsentation** erfolgreich durchgeführt. Dabei konnte der vollständige Funktionsumfang des Systems demonstriert werden.
 
@@ -224,6 +224,14 @@ Für die Live-Demo wurde als Substitution für einen echten Bienenstock eine Bie
 BeeRduino zeigt, wie moderne IoT-Technologien und Microservice-Architekturen in der Imkerei einen echten Mehrwert schaffen können. Unser Prototyp bietet Imkern eine zuverlässige Lösung zur Überwachung ihrer Bienenvölker, die frühzeitige Maßnahmen bei kritischen Zuständen ermöglicht.
 
 In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit optimieren und eine automatisierte Anomalieerkennung implementieren. Auch eine mobile App ist angedacht, um die Bedienbarkeit weiter zu verbessern.
+
+**Was wir gelernt haben**:
+
+- Arduino-Entwicklung mit CLion und PlatformIO war deutlich angenehmer als die Standard-IDE.
+- Beim Löten kommt es auf Vorbereitung und gutes Werkzeug an.
+- Gewichtssensoren zu kalibrieren braucht Zeit und stabile Referenzgewichte.
+- Microservices machen das System flexibel, aber der initiale Aufwand ist nicht zu unterschätzen.
+- Für spätere Projekte würden wir Logging und Fehleranalyse früher mitdenken.
 
 ---
 
