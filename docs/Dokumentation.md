@@ -78,7 +78,7 @@ Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwische
 
 ### 3.3 Arduino Firmware
 
-Die Firmware auf dem Arduino MKR WAN 1310 ist in C++ geschrieben und modular aufgebaut. Sie übernimmt das zyklische Auslesen der Sensoren und die optionale Datenübertragung per LoRaWAN. Die Ausführung erfolgt über die klassische `setup()`/`loop()`-Struktur von Arduino.
+Die Firmware auf dem Arduino MKR WAN 1310 ist in C++ geschrieben. Sie übernimmt das zyklische Auslesen der Sensoren und die optionale Datenübertragung per LoRaWAN. Die Ausführung erfolgt über die klassische `setup()`/`loop()`-Struktur von Arduino.
 
 #### Aufbau und Sensorintegration
 
@@ -141,13 +141,13 @@ Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spri
 
 - **Core-Service**: Verwaltung der Stammdaten der Bienenstöcke, Registrierung neuer Völker und zentrale Schnittstelle für Client-Anfragen.
 
-- **Data-Collector-Service**: Nimmt die Sensordaten entgegen, empfängt sie via REST API vom Gateway und verteilt sie über RabbitMQ asynchron an weitere Services.
+- **Data-Collector-Service**: Empfängt Sensordaten vom Gateway über eine REST-Schnittstelle unter `/gateway/collector` (für Einzeldatensätze) bzw. `/gateway/collector/batch` (für mehrere Einträge). Die REST-Endpunkte akzeptieren JSON-Objekte im definierten `MeasurementJson`-Format. Nach erfolgreicher Validierung werden die Daten über einen RabbitMQ-Publisher asynchron an weitere Microservices weitergeleitet.
 
 - **Data-Analysis-Service**: Speichert die Zeitreihen-Daten persistent in einer MariaDB-Datenbank, bietet Abfrage- und Echtzeit-Subscription-APIs via GraphQL.
 
-- **Gateway-Service**: Verbindet Data-Producers mit Data-Collector-Services, sorgt für Load Balancing und Health Checks, registriert sich und verwaltet dynamisch Service-Endpoints über Consul.
+- **Data-Producer-Service**: Dient als Bindeglied zwischen externen Datenquellen (z. B. dem Arduino via USB) und dem System. In der Demoumgebung übernimmt er das Einlesen der seriellen Messdaten, wandelt diese in JSON-Objekte um und sendet sie an das Gateway. Sollte die Netzwerkverbindung temporär ausfallen, speichert er die Messwerte lokal in einer kleinen H2-Datenbank. Sobald die Verbindung wiederhergestellt ist, werden die Daten automatisch nachgesendet. Der Service kann optional auch Dummy-Daten erzeugen, was sich beim Testen und Entwickeln als hilfreich erwiesen hat.
 
-Ein Besonderheit ist die eingebaute Fehlertoleranz: Sollte die Netzwerkverbindung temporär ausfallen, speichert der Data-Producer die Messwerte lokal in einer kleinen H2-Datenbank. Sobald die Verbindung wieder steht, werden die Daten automatisch nachgesendet. Praktisch ist zudem, dass das Backend Dummy-Daten erzeugen kann, was beim Testen enorm geholfen hat. Consul sorgt dafür, dass die Lastverteilung im System dynamisch funktioniert, was die Skalierbarkeit verbessert.
+- **Gateway-Service**: Verbindet Data-Producers mit Data-Collector-Services, sorgt für Load Balancing und Health Checks, registriert sich und verwaltet dynamisch Service-Endpoints über Consul.
 
 ---
 
