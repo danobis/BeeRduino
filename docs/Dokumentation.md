@@ -68,7 +68,7 @@ Das Schaltbild zeigt, wie die vier Load Cells zu einer Wheatstone-Brücke versch
   <img src="./assembly-photos/HX711_4x50kg_load_cell_diagram.png" alt="Lastzellen-Verkabelung mit HX711" width="80%" />
 </div>
 
-Diese Grafik zeigt die Verdrahtung von vier Load Cells, die gemeinsam eine Wheatstone-Brücke bilden. Die kombinierten Signale werden an den HX711-Messverstärker weitergeleitet. Der HX711 überträgt die Messdaten über zwei digitale Leitungen (DT für Daten, SCK für Takt) an den Arduino. Zusätzlich erfolgt die Spannungsversorgung über VCC und GND.
+Hier sieht man die Verdrahtung von vier Load Cells, die gemeinsam eine Wheatstone-Brücke bilden. Die kombinierten Signale werden an den HX711-Messverstärker weitergeleitet. Der HX711 überträgt die Messdaten über zwei digitale Leitungen (DT für Daten, SCK für Takt) an den Arduino. Zusätzlich erfolgt die Spannungsversorgung über VCC und GND.
 
 ### 3.2 Lötarbeiten und Montage
 
