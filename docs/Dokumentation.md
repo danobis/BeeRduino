@@ -235,7 +235,7 @@ Am 27. Juni 2025 wurde die **technische Präsentation** erfolgreich durchgeführ
 Für die Live-Demo wurde als Substitution für einen echten Bienenstock eine Bierkiste verwendet. Diese Wahl beruhte auf zwei Gründen: Zum einen entspricht das Gewicht einer Bierkiste in etwa dem eines Bienenstocks, sodass die Lastsensoren realistische Messwerte liefern konnten. Zum anderen minimierte die Bierkiste das Risiko von Schäden, die bei einem lebenden Bienenvolk auftreten könnten. Zur Kalibrierung der Wägesensoren diente ein schweres Buch als Referenzgewicht.
 
 <div align="center">
-  <img src="./assembly-photos/IMG_5522.HEIC" alt="Bierkiste vor der Präsentation" width="50%" />
+  <img src="./assembly-photos/IMG_5522.png" alt="Bierkiste vor der Präsentation" width="50%" />
 </div>
 
 ---
