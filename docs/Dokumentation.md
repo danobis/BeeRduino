@@ -132,6 +132,36 @@ WEIGHT	-- Weight: 32.5 kg
 
 Der Kalibrierungsfaktor für den HX711 wird im EEPROM des Arduino gespeichert. Beim Start wird dieser Wert geladen und zur Berechnung verwendet. Die Kalibrierung erfolgt interaktiv über den seriellen Monitor. Die Speicherung erfolgt nur auf Bestätigung.
 
+Die folgende Serie zeigt die schrittweise Kalibrierung des HX711 über den seriellen Monitor:
+
+<div align="center">
+  <img src="./screenshots/Screenshot1.png" alt="Kalibrierung Teil 1" width="50%" />
+</div>
+
+Nach dem Start der Kalibrierung wird die Tare-Funktion ausgelöst, um die Waage bei leerer Plattform auf Null zu setzen.
+
+<div align="center">
+  <img src="./screenshots/Screenshot2.png" alt="Kalibrierung Teil 2" width="50%" />
+</div>
+
+Dann wird ein bekanntes Gewicht aufgelegt und der Wert in Gramm eingegeben.
+
+<div align="center">
+  <img src="./screenshots/Screenshot3.png" alt="Kalibrierung Teil 3" width="50%" />
+</div>
+
+Die Firmware berechnet nun den Kalibrierungsfaktor und fragt, ob dieser im Flash gespeichert werden soll.
+
+<div align="center">
+  <img src="./screenshots/Screenshot4.png" alt="Kalibrierung Teil 4" width="50%" />
+</div>
+
+Ist die Kalibrierung abgeschlossen, beginnt die Ausgabe der Messdaten. Gewicht, Temperatur und Luftfeuchtigkeit werden alle 500 ms gemessen und ausgegeben.
+
+<div align="center">
+  <img src="./screenshots/Screenshot5.png" alt="Serieller Output" width="50%" />
+</div>
+
 #### LoRaWAN (optional)
 
 Die Firmware unterstützt LoRaWAN, wenn das Makro `LORAWAN` aktiviert ist. In diesem Fall wird alle 5 Sekunden ein Datenpaket mit folgenden Werten gesendet:
