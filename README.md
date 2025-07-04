@@ -24,9 +24,6 @@ The web interface for visualizing sensor data from the beehive, including time-s
 ### `docs/`
 Contains documentation for the entire project, including system architecture, data flow, written reports, and diagrams. The main written report is in `Dokumentation.md`.
 
-### `presentation/`
-Contains the final project presentation (PDF and PowerPoint).
-
 ## Notes
 - This project was developed as part of the course **MUS2UE: Mobile und ubiquitäre Systeme (SE.ma VZ SS25)** at **FH OÖ Campus Hagenberg**.
 
