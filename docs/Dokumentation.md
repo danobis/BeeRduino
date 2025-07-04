@@ -183,6 +183,8 @@ Gewichtsdaten werden vor der Darstellung im Frontend von Gramm in Kilogramm umge
 
 Ein zentrales visuelles Element der Anwendung sind die **Live-Kacheln**, die den jeweils letzten Wert jedes Sensors anzeigen und den Zeitpunkt der letzten Aktualisierung mitliefern. Die Anwendung ist responsiv aufgebaut und funktioniert auf verschiedenen Bildschirmgrößen.
 
+![Bierkiste vor der Präsentation](./screenshots/Screenshot6.png)
+
 ---
 
 ## 4. Ergebnisse
