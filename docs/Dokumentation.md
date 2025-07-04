@@ -153,13 +153,35 @@ Das Backend besteht aus mehreren Microservices, die in Java mit Quarkus und Spri
 
 ### 3.5 Frontend Webanwendung
 
-Das Frontend ist eine moderne React-basierte Webanwendung, die:
+Das Frontend ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über **GraphQL**, realisiert mit dem Apollo Client.
 
-- Die Sensordaten in Echtzeit per GraphQL Subscription empfängt.
-- Historische Messwerte per GraphQL Query abruft.
-- Zeitreihendiagramme mit Chart.js visualisiert, farblich differenziert nach Sensortyp.
-- Aktuelle Messwerte in übersichtlichen Kacheln mit Zeitstempel anzeigt.
-- Die Bedienung intuitiv gestaltet, sodass Imker schnell den Zustand ihrer Bienenstöcke überblicken können.
+Für die Datenanbindung wird ein Split-Link verwendet, der je nach Operation zwischen einem HTTP- und einem WebSocket-Link unterscheidet:
+
+- **Historische Daten** werden über den Endpunkt `/gateway/graphql/analysis` per GraphQL Query abgefragt.
+- **Live-Daten** werden über den WebSocket-Endpunkt `/gateway/ws/analysis/` per Subscription empfangen.
+
+Die beiden zentralen GraphQL-Operationen sind:
+
+- `GetMeasurements`: Liefert Zeitreihendaten zu einem bestimmten Zeitraum.
+- `OnNewMeasurement`: Liefert neue Einzelwerte für einen bestimmten Sensortyp in Echtzeit.
+
+Sobald die Anwendung gestartet wird, ruft sie zunächst historische Daten für die letzten fünf Tage ab. Diese Daten werden aufbereitet, gruppiert und in einem internen Zustand abgelegt. Gleichzeitig werden für alle fünf unterstützten Sensortypen jeweils separate Subscriptions eingerichtet:
+
+- Temperatur innen
+- Temperatur außen
+- Luftfeuchtigkeit innen
+- Luftfeuchtigkeit außen
+- Gewicht
+
+Neue Datenpunkte aus diesen Subscriptions werden automatisch in die Zeitreihen eingefügt. Es wird dabei darauf geachtet, dass die Listen nicht zu groß werden: Ältere Einträge werden ab einer definierten Maximalanzahl entfernt. Zusätzlich werden die jeweils aktuellsten Messwerte separat gespeichert, um die Kachelanzeige mit Zeitstempeln zu ermöglichen.
+
+Die grafische Darstellung erfolgt mit **Chart.js**, das in React über `react-chartjs-2` eingebunden ist. Jeder Sensor wird in einem eigenen Liniendiagramm angezeigt, wobei Farbe, Einheit und Beschriftung individuell konfiguriert sind. Die Zuordnung erfolgt über ein Mapping zwischen Backend- und Frontend-Sensortypen, z. B.:
+
+- `"TEMPERATURE_INSIDE"` → `"sensor_temperature_inside"` → Label: „Temperature Inside“, Einheit: °C
+
+Gewichtsdaten werden vor der Darstellung im Frontend von Gramm in Kilogramm umgerechnet.
+
+Ein zentrales visuelles Element der Anwendung sind die **Live-Kacheln**, die den jeweils letzten Wert jedes Sensors anzeigen und den Zeitpunkt der letzten Aktualisierung mitliefern. Die Anwendung ist responsiv aufgebaut und funktioniert auf verschiedenen Bildschirmgrößen.
 
 ---
 
