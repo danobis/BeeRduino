@@ -228,7 +228,7 @@ In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit 
 **Was wir gelernt haben**:
 
 - Arduino-Entwicklung mit CLion und PlatformIO war deutlich angenehmer als die Standard-IDE.
-- Beim Löten kommt es auf Vorbereitung und gutes Werkzeug an.
+- Beim Löten hilft nicht nur gutes Werkzeug: Man muss auch die richtigen Leute kennen, die wissen, wie es geht.
 - Gewichtssensoren zu kalibrieren braucht stabile Referenzgewichte.
 - Unser Backend macht das System skalierbar, aber der Aufwand zum Start der Gesamtanwendung ist nicht zu unterschätzen.
 - Für spätere Projekte würden wir Logging und Fehleranalyse früher mitdenken.
