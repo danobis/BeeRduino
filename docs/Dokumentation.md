@@ -30,13 +30,13 @@ Das System besteht aus drei Kernkomponenten:
 
 - **Arduino-Firmware**: Erfasst regelmäßig Sensordaten (Temperatur, Luftfeuchtigkeit, Gewicht) über Sensoren wie den DHT22 und eine Wägesensorplattform (HX711). Die Daten werden drahtlos an das Backend gesendet.
 
-- **Backend Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
+- **Backend-Microservices**: Implementiert mit Quarkus und Spring Boot, bestehen aus mehreren Microservices, die jeweils unterschiedliche Aufgaben übernehmen:
   - **Core-Service** verwaltet Stammdaten der Bienenstöcke und koordiniert die Registrierung neuer Völker.
   - **Data-Collector-Service** empfängt Messdaten vom Arduino via Gateway und verteilt sie asynchron per RabbitMQ.
   - **Data-Analysis-Service** speichert und verarbeitet die Messwerte, stellt historische Daten und Live-Updates via GraphQL bereit.
   - **Gateway-Service** fungiert als API-Gateway mit Service-Discovery (Consul) und Lastverteilung.
 
-- **Frontend Webanwendung**: Realisiert mit React und Apollo Client, visualisiert Messdaten in Echtzeit und historisch über interaktive Zeitreihendiagramme (Chart.js). Sie bietet eine intuitive Oberfläche für Imker, um jederzeit den Zustand ihrer Bienenvölker im Blick zu behalten.
+- **Frontend-Webanwendung**: Realisiert mit React und Apollo Client, visualisiert Messdaten in Echtzeit und historisch über interaktive Zeitreihendiagramme (Chart.js). Sie bietet eine intuitive Oberfläche für Imker, um jederzeit den Zustand ihrer Bienenvölker im Blick zu behalten.
 
 Die Sensordaten werden direkt auf dem Arduino ausgelesen und als JSON-Nachrichten an unser Backend gesendet. Dort fängt ein Service die Daten auf, verteilt sie über RabbitMQ an verschiedene Services und speichert sie schließlich in MariaDB-Datenbanken. Mithilfe der GraphQL-Schnittstelle können sowohl historische Daten als auch Echtzeit-Updates per Subscriptions vom Frontend abgefragt werden.
 
@@ -147,7 +147,7 @@ Das Format ist binär (28 Byte) und wird über den internen LoRa-Modem des MKR
 
 ---
 
-### 3.4 Backend Microservices
+### 3.4 Backend-Microservices
 
 Das Backend (`beehive-monitor`) besteht aus mehreren Microservices, die in Java mit Quarkus und Spring Boot implementiert sind:
 
@@ -163,7 +163,7 @@ Das Backend (`beehive-monitor`) besteht aus mehreren Microservices, die in Java 
 
 ---
 
-### 3.5 Frontend Webanwendung
+### 3.5 Frontend-Webanwendung
 
 Das Frontend (`beehive-dashboard`) ist eine moderne, in **React** umgesetzte Single-Page-Webanwendung. Sie ermöglicht sowohl die Betrachtung historischer Zeitreihen als auch die Anzeige von Live-Messwerten in Echtzeit. Die Kommunikation mit dem Backend erfolgt über GraphQL, realisiert mit dem **Apollo Client**.
 
