@@ -80,15 +80,60 @@ Auf diesem Foto ist der Lötkolben im Einsatz, während die Verbindungen zwische
 
 ### 3.3 Arduino Firmware
 
-Die Firmware auf dem Arduino ist verantwortlich für:
+Die Firmware auf dem Arduino MKR WAN 1310 ist in C++ geschrieben und modular aufgebaut. Sie übernimmt das zyklische Auslesen der Sensoren und die optionale Datenübertragung per LoRaWAN. Die Ausführung erfolgt über die klassische `setup()`/`loop()`-Struktur von Arduino.
 
-- Das zyklische Auslesen der Temperatur- und Luftfeuchtigkeitssensoren (DHT22), jeweils innen und außen am Bienenstock.
-- Das Auslesen der Gewichtswerte vom HX711-Signalwandler.
-- Die Fehlerüberprüfung bei Sensorablesungen, um ungültige Messwerte auszuschließen.
-- Die Ausgabe der Messwerte auf die serielle Schnittstelle zur lokalen Überwachung im Debugmodus.
-- Die Übertragung der gesammelten Daten an das Backend.
+#### Aufbau und Sensorintegration
 
-Die Software ist modular aufgebaut und nutzt Debug-Makros, um im Entwicklungsmodus umfangreiche Informationen auszugeben. Das Hauptprogramm liest alle zwei Sekunden alle Sensorwerte und führt die Berechnung eines Wärmeindex durch, der das thermische Empfinden besser beschreibt als reine Temperaturwerte.
+- **DHT22 (innen/außen)**\
+  Zwei digitale Sensoren zur Messung von Temperatur und Luftfeuchtigkeit sind an den Pins `A0` (innen) und `A1` (außen) angeschlossen. Die Werte werden zusätzlich als Heat Index berechnet.
+
+- **HX711 mit Load Cells**\
+  Vier Dehnungsmessstreifen sind über einen HX711-Messverstärker mit dem Arduino verbunden. Der HX711 verwendet die Pins `A5` (DATA) und `A6` (CLOCK).\
+  Die Werte werden als Gewicht in Gramm oder Kilogramm ausgegeben.
+
+#### Datenverarbeitung
+
+Alle 500 ms wird geprüft, ob neue Sensorwerte erfasst werden sollen. Dabei werden folgende Schritte durchgeführt:
+
+1. Temperatur und Luftfeuchtigkeit innen/außen messen
+2. Heat Index für beide Positionen berechnen
+3. Gewicht über HX711 auslesen
+4. Serielle Ausgabe der Messwerte
+5. (optional) Senden der Daten über LoRa
+
+Bei fehlgeschlagenen Ablesungen (`NaN`) wird der Messzyklus abgebrochen.
+
+#### Serielle Konsole
+
+Über die serielle Schnittstelle (9600 Baud) sind zwei Kommandos verfügbar:
+
+- `t` – startet Tare-Vorgang (Nullstellung) des HX711
+- `r` – startet geführte Kalibrierung mit bekanntem Gewicht (inkl. optionalem Speichern im Flash)
+
+Die Firmware gibt kontinuierlich strukturierte Daten im Textformat aus, z. B.:
+
+```
+INSIDE	-- Temperature: 35.1°C  Humidity: 65.2%  Heat index: 38.3°C
+OUTSIDE	-- Temperature: 27.4°C  Humidity: 52.0%  Heat index: 28.7°C
+WEIGHT	-- Weight: 32.5 kg
+```
+
+#### Kalibrierung und Flash-Speicher
+
+Der Kalibrierungsfaktor für den HX711 wird im EEPROM des Arduino gespeichert. Beim Start wird dieser Wert geladen und zur Berechnung verwendet. Die Kalibrierung erfolgt interaktiv über den seriellen Monitor. Die Speicherung erfolgt nur auf Bestätigung.
+
+#### LoRaWAN (optional)
+
+Die Firmware unterstützt LoRaWAN, wenn das Makro `LORAWAN` aktiviert ist. In diesem Fall wird alle 5 Sekunden ein Datenpaket mit folgenden Werten gesendet:
+
+- Zeitstempel (`uint64_t`)
+- Temperatur innen (`float`)
+- Luftfeuchte innen (`float`)
+- Temperatur außen (`float`)
+- Luftfeuchte außen (`float`)
+- Gewicht (`float`)
+
+Das Format ist binär (28 Byte) und wird über den internen LoRa-Modem des MKR WAN 1310 gesendet. Die Verbindung erfolgt über OTAA mit App EUI und App Key aus der Datei `arduino_secrets.h`.
 
 ---
 
