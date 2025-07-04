@@ -44,27 +44,27 @@ Die Sensordaten werden direkt auf dem Arduino ausgelesen und als JSON-Nachrichte
 
 ### 3.1 Hardware und Sensorik
 
-Für die Datenerfassung setzen wir auf bewährte Komponenten, die zuverlässig und stromsparend sind. Zentraler Mikrocontroller ist ein **Arduino MKR WAN 1310**, basierend auf dem SAMD21 Cortex-M0+ 32-bit ARM-Prozessor. Dieser verfügt über integriertes LoRa-Funkmodul, um in späteren Ausbaustufen auch lange Funkreichweiten zu ermöglichen.
+Für die Datenerfassung setzen wir auf bewährte Komponenten, die zuverlässig und stromsparend sind. Zentraler Mikrocontroller ist ein **Arduino MKR WAN 1310**, basierend auf dem SAMD21 Cortex-M0+ 32-bit ARM-Prozessor. Dieser verfügt über ein integriertes LoRa-Funkmodul, um in späteren Ausbaustufen auch lange Funkreichweiten zu ermöglichen.
 
-Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen und außen am Bienenstock), die Temperatur und Luftfeuchtigkeit erfassen. Die Sensoren sind als kleine Breakout-Boards montiert und bieten einen digitalen Datenausgang, der einfach mit dem Arduino verbunden werden kann.
+Für die Umweltmessung nutzen wir zwei **DHT22** Sensor-Boards (jeweils innen und außen am Bienenstock), die Temperatur und Luftfeuchtigkeit erfassen. Die Sensoren sind als kleine Breakout-Boards montiert und bieten einen digitalen Datenausgang, der direkt mit dem Arduino verbunden ist.
 
-Der Gewichtssensor besteht aus vier einzelnen Dehnungsmessstreifen (Load Cells), die an den Ecken einer stabilen Platte montiert sind. Diese sind über den **HX711** Messverstärker mit dem Arduino verbunden und ermöglichen so die Erfassung des Gewichts des Bienenstocks.
+Der Gewichtssensor besteht aus vier einzelnen Load Cells (Dehnungsmessstreifen), die mechanisch an den Ecken einer stabilen Plattform montiert sind. Elektrisch sind sie zu einer Wheatstone-Brücke verschaltet. Diese wird an einen **HX711**-Messverstärker angeschlossen, der das analoge Signal verstärkt, digitalisiert und an den Arduino überträgt.
 
 ![Waage mit angebrachtem Sensor](./assembly-photos/IMG_4644.png)
 
-Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten Dehnungsmessstreifen. Die dünnen Drähte führen zu einem kleinen Messverstärker.
+Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten Load Cells. Die dünnen Drähte führen zum HX711-Messverstärker.
 
 ![Gewichtssensor (Load Cell)](./assembly-photos/IMG_4645.png)
 
-Hier ist das HX711-Modul zu sehen, ein präziser 24-Bit-Messverstärker für digitale Wägetechnik. An die seitlichen Schraubklemmen (E+, E−, A+, A−, B+, B−) werden die Load Cells angeschlossen. Die rechte Seite führt das verstärkte digitale Signal über vier Jumper-Kabel an den Arduino weiter (GND, DT, SCK, VCC).
+Hier ist das HX711-Modul zu sehen, ein präziser 24-Bit-Messverstärker für digitale Wägetechnik. An den linken Anschlussleisten (E+, E−, A+, A−) werden die Load Cells in Brückenschaltung angeschlossen. Auf der rechten Seite befinden sich die vier Pins zur Verbindung mit dem Arduino: VCC (Stromversorgung), GND (Masse), DT (Datenleitung) und SCK (Takt).
 
 ![Arduino-Schaltkreis mit angeschlossener Load Cell](./assembly-photos/arduino-circuit.png)
 
-Das Schaltbild zeigt die Verbindung der vier Load Cells mit dem HX711-Modul, das wiederum an einen Arduino angeschlossen ist. Die Lastsensoren sind parallel verschaltet und liefern ein kombiniertes Signal. Der HX711 wandelt das analoge Signal in digitale Werte um, die der Arduino ausliest.
+Das Schaltbild zeigt, wie die vier Load Cells zu einer Wheatstone-Brücke verschaltet und an den HX711 angeschlossen sind. Der HX711 verstärkt das resultierende Differenzsignal und wandelt es in digitale Werte um, die der Arduino auslesen kann.
 
 ![Lastzellen-Verkabelung mit HX711](./assembly-photos/HX711_4x50kg_load_cell_diagram.png)
 
-Diese Grafik visualisiert die genaue Verdrahtung der Load Cells: Jeder Sensor hat vier Anschlüsse (E+, E-, A+, A-), die zusammen mit dem HX711 verbunden sind. Die Signale werden so kombiniert und an den Arduino weitergeleitet.
+Diese Grafik zeigt die Verdrahtung von vier Load Cells, die gemeinsam eine Wheatstone-Brücke bilden. Die kombinierten Signale werden an den HX711-Messverstärker weitergeleitet. Der HX711 überträgt die Messdaten über zwei digitale Leitungen (DT für Daten, SCK für Takt) an den Arduino. Zusätzlich erfolgt die Spannungsversorgung über VCC und GND.
 
 ### 3.2 Lötarbeiten und Montage
 
