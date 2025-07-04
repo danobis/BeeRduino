@@ -229,8 +229,8 @@ In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit 
 
 - Arduino-Entwicklung mit CLion und PlatformIO war deutlich angenehmer als die Standard-IDE.
 - Beim Löten kommt es auf Vorbereitung und gutes Werkzeug an.
-- Gewichtssensoren zu kalibrieren braucht Zeit und stabile Referenzgewichte.
-- Microservices machen das System flexibel, aber der initiale Aufwand ist nicht zu unterschätzen.
+- Gewichtssensoren zu kalibrieren braucht stabile Referenzgewichte.
+- Unser Backend macht das System skalierbar, aber der Aufwand zum Start der Gesamtanwendung ist nicht zu unterschätzen.
 - Für spätere Projekte würden wir Logging und Fehleranalyse früher mitdenken.
 
 ---
