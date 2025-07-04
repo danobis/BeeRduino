@@ -256,4 +256,4 @@ In Zukunft möchten wir LoRa zur Datenübertragung nutzen, die Batterielaufzeit 
 
 ---
 
-*Diese Dokumentation wurde im Rahmen des Lehrveranstaltung **MUS2UE: Mobile und ubiquitäre Systeme (SE.ma VZ SS25)** im Studiengang  **FH OÖ Campus Hagenberg** erstellt.*
+*Diese Dokumentation wurde im Rahmen des Lehrveranstaltung **MUS2UE: Mobile und ubiquitäre Systeme (SE.ma VZ SS25)** an der **FH OÖ Campus Hagenberg** erstellt.*
