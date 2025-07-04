@@ -56,9 +56,7 @@ Auf diesem Bild sieht man die Waageplatte mit den vier an den Ecken befestigten 
 
 ![Gewichtssensor (Load Cell)](./assembly-photos/IMG_4645.png)
 
-Hier ist eine der vier Load Cells im Detail zu sehen. Diese Sensoren messen die Belastung durch eine Veränderung ihres elektrischen Widerstands.
-
-Für die Auswertung der Sensorsignale nutzen wir einen HX711-Verstärkerchip, der die sehr kleinen elektrischen Änderungen verstärkt und digitalisiert.
+Hier ist das HX711-Modul zu sehen, ein präziser 24-Bit-Messverstärker für digitale Wägetechnik. An die seitlichen Schraubklemmen (E+, E−, A+, A−, B+, B−) werden die Load Cells angeschlossen. Die rechte Seite führt das verstärkte digitale Signal über vier Jumper-Kabel an den Arduino weiter (GND, DT, SCK, VCC).
 
 ![Arduino-Schaltkreis mit angeschlossener Load Cell](./assembly-photos/arduino-circuit.png)
 
