@@ -90,7 +90,7 @@ Die Firmware auf dem Arduino MKR WAN 1310 ist in C++ geschrieben. Sie übernimmt
   Zwei digitale Sensoren zur Messung von Temperatur und Luftfeuchtigkeit sind an den Pins `A0` (innen) und `A1` (außen) angeschlossen. Die Werte werden zusätzlich als Heat Index berechnet.
 
 - **HX711 mit Load Cells**\
-  Vier Dehnungsmessstreifen sind über einen HX711-Messverstärker mit dem Arduino verbunden. Der HX711 verwendet die Pins `A5` (DATA) und `A6` (CLOCK).\ Die Werte werden als Gewicht in Gramm oder Kilogramm ausgegeben.
+  Vier Dehnungsmessstreifen sind über einen HX711-Messverstärker mit dem Arduino verbunden. Der HX711 verwendet die Pins `A5` (DATA) und `A6` (CLOCK). Die Werte werden als Gewicht in Gramm oder Kilogramm ausgegeben.
 
 #### Datenverarbeitung
 
